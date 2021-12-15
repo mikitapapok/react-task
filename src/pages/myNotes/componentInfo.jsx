@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import NoteListItem from "./noteListItem";
 import { StyledComponentInfo } from "./styled";
 
-const ComponentInfo = ({componentInfo}) => {
+const ComponentInfo = ({ componentInfo }) => {
   const { id, title, description, date } = componentInfo;
   return (
     <StyledComponentInfo>
