@@ -13,11 +13,7 @@ const NoteListItem = ({
   showId,
 }) => {
   return (
-    <div
-      className="notes-list__component-text"
-      onClick={getItemInfo}
-      id={id}
-    >
+    <div onClick={getItemInfo} id={id}>
       <h2>{title}</h2>
       {showId && (
         <p>
@@ -26,15 +22,11 @@ const NoteListItem = ({
         </p>
       )}
       <p>
-        <StyledSpan className="notes-list__component-text__component">
-          Description:{" "}
-        </StyledSpan>
-        {!showId ? description.slice(0, 20) : description}
+        <StyledSpan>Description: </StyledSpan>
+        {showId ? description : description.slice(0, 20)}
       </p>
       <p>
-        <StyledSpan className="notes-list__component-text__component">
-          Date:{" "}
-        </StyledSpan>
+        <StyledSpan>Date: </StyledSpan>
         {date}
       </p>
     </div>
