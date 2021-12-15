@@ -22,14 +22,13 @@ export const StyledComponentInfo = styled("div")({
   padding: "20px",
 });
 
-export const StyledListComponent = styled(ListItem)({
-  borderBottom: "1px solid black",
-  "&.active": {
-    background: "darkgrey",
-    color: "white",
-  },
-});
+export const StyledListComponent = styled(ListItem)((props)=>({
+    borderBottom: "1px solid black",
+  cursor: "pointer",
+  background: `${props.isActive?"darkgrey": "white"}`,
+  color: `${props.isActive?"white":"black"}`
 
+}))
 export const StyledSpan = styled("span")({
   fontWeight: "Bold",
 });

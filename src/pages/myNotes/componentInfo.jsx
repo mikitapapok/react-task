@@ -4,9 +4,10 @@ import PropTypes from "prop-types";
 import NoteListItem from "./noteListItem";
 import { StyledComponentInfo } from "./styled";
 
-const ComponentInfo = ({ id, description, title, date }) => {
+const ComponentInfo = (props) => {
+  const {id,title,description,date}=props.componentInfo
   return (
-    <StyledComponentInfo className="active">
+    <StyledComponentInfo >
       {!id ? (
         <h1>Select note to display</h1>
       ) : (
@@ -22,10 +23,13 @@ const ComponentInfo = ({ id, description, title, date }) => {
   );
 };
 ComponentInfo.propTypes = {
-  id: PropTypes.number,
-  title: PropTypes.string,
-  description: PropTypes.string,
-  date: PropTypes.string,
+
+  componentInfo: PropTypes.objectOf({
+    id: PropTypes.number,
+    title: PropTypes.string,
+    description: PropTypes.string,
+    date: PropTypes.string,
+  })
 };
 
 export default ComponentInfo;

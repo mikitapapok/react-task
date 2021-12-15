@@ -9,7 +9,7 @@ import { todoList } from "../../constants/noteList";
 import { Container, NotesList, StyledListComponent } from "./styled";
 
 const Notes = () => {
-  const [componentInfo, setComponentInfo] = useState(null);
+  const [componentInfo, setComponentInfo] = useState({});
 
   const getItemInfo = (e) => {
     const getCurrentItem = todoList.find((todo) => {
@@ -24,8 +24,8 @@ const Notes = () => {
         <List>
           {todoList.map((todo) => (
             <StyledListComponent
-              className={
-                componentInfo && componentInfo.id === todo.id ? "active" : null
+              isActive={
+                componentInfo && componentInfo.id === todo.id ? true : false
               }
               key={todo.id}
             >
@@ -45,12 +45,7 @@ const Notes = () => {
           ))}
         </List>
       </Container>
-      <ComponentInfo
-        id={componentInfo ? componentInfo.id : null}
-        title={componentInfo ? componentInfo.title : null}
-        description={componentInfo ? componentInfo.description : null}
-        date={componentInfo ? componentInfo.date : null}
-      />
+      <ComponentInfo componentInfo={componentInfo} />
     </NotesList>
   );
 };
