@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 
-import List from '@mui/material/List';
 import { ListItemText } from '@mui/material';
 
 import ComponentInfo from './componentInfo';
 import NoteListItem from './noteListItem';
 import { todoList } from '../../constants/noteList';
-import { Container, NotesList, StyledListComponent } from './styled';
+import { Container, NotesList, StyledList, StyledListComponent } from './styled';
 
 const Notes = () => {
     const [componentInfo, setComponentInfo] = useState({});
@@ -21,7 +20,7 @@ const Notes = () => {
     return (
         <NotesList>
             <Container>
-                <List>
+                <StyledList>
                     {todoList.map((todo) => (
                         <StyledListComponent
                             isActive={componentInfo && componentInfo.id === todo.id ? true : false}
@@ -41,7 +40,7 @@ const Notes = () => {
                             />
                         </StyledListComponent>
                     ))}
-                </List>
+                </StyledList>
             </Container>
             <ComponentInfo componentInfo={componentInfo} />
         </NotesList>

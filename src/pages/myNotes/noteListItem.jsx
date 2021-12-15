@@ -16,7 +16,7 @@ const NoteListItem = ({ getItemInfo, id, title, description, date, showId }) => 
             )}
             <p>
                 <StyledSpan>Description: </StyledSpan>
-                {showId ? description : description.slice(0, 20)}
+                {showId ? description : `${description.slice(0, 20).trim()}...`}
             </p>
             <p>
                 <StyledSpan>Date: </StyledSpan>
