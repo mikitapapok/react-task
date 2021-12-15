@@ -2,9 +2,9 @@ import React from 'react';
 
 import PropTypes from 'prop-types';
 
-import { StyledSpan } from './styled';
+import { StyledSpan, EditButton } from './styled';
 
-const NoteListItem = ({ getItemInfo, id, title, description, date, showId }) => {
+const NoteListItem = ({ getItemInfo, id, title, description, date, showId, openModal }) => {
     return (
         <div onClick={getItemInfo} id={id}>
             <h2>{title}</h2>
@@ -22,6 +22,7 @@ const NoteListItem = ({ getItemInfo, id, title, description, date, showId }) => 
                 <StyledSpan>Date: </StyledSpan>
                 {date}
             </p>
+            {showId && <EditButton onClick={openModal}>Edit</EditButton>}
         </div>
     );
 };
@@ -33,6 +34,7 @@ NoteListItem.propTypes = {
     date: PropTypes.string,
     getItemInfo: PropTypes.func,
     showId: PropTypes.bool,
+    openModal: PropTypes.func,
 };
 
 export default NoteListItem;

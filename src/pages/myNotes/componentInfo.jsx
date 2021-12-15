@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import NoteListItem from './noteListItem';
 import { StyledComponentInfo } from './styled';
 
-const ComponentInfo = ({ componentInfo }) => {
-    const { id, title, description, date } = componentInfo;
+const ComponentInfo = (props) => {
+    const { id, title, description, date } = props.componentInfo;
     return (
         <StyledComponentInfo>
             {id ? (
@@ -15,6 +15,7 @@ const ComponentInfo = ({ componentInfo }) => {
                     title={title}
                     date={date}
                     showId={true}
+                    openModal={props.openModal}
                 />
             ) : (
                 <h1>Select note to display</h1>
@@ -23,12 +24,8 @@ const ComponentInfo = ({ componentInfo }) => {
     );
 };
 ComponentInfo.propTypes = {
-    componentInfo: PropTypes.objectOf({
-        id: PropTypes.number,
-        title: PropTypes.string,
-        description: PropTypes.string,
-        date: PropTypes.string,
-    }),
+    componentInfo: PropTypes.object,
+    openModal: PropTypes.func,
 };
 
 export default ComponentInfo;
