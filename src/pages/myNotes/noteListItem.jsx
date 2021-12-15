@@ -15,16 +15,16 @@ const NoteListItem = ({
   return (
     <div
       className="notes-list__component-text"
-      onClick={getItemInfo ? getItemInfo : null}
-      id={id ? id : null}
+      onClick={getItemInfo}
+      id={id}
     >
       <h2>{title}</h2>
-      {showId ? (
+      {showId && (
         <p>
           <StyledSpan>Id: </StyledSpan>
           {id}
         </p>
-      ) : null}
+      )}
       <p>
         <StyledSpan className="notes-list__component-text__component">
           Description:{" "}
@@ -49,4 +49,5 @@ NoteListItem.propTypes = {
   getItemInfo: PropTypes.func,
   showId: PropTypes.bool,
 };
+
 export default NoteListItem;

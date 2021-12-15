@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 
-import { Container, NotesList, StyledListComponent } from "./styled";
-
 import List from "@mui/material/List";
 import { ListItemText } from "@mui/material";
 
 import ComponentInfo from "./componentInfo";
 import NoteListItem from "./noteListItem";
-import { todoList } from "../../constans/noteList";
+import { todoList } from "../../constants/noteList";
+import { Container, NotesList, StyledListComponent } from "./styled";
 
 const Notes = () => {
   const [componentInfo, setComponentInfo] = useState(null);
@@ -17,7 +16,6 @@ const Notes = () => {
       return todo.id == e.currentTarget.id;
     });
     setComponentInfo(getCurrentItem);
-    console.log(componentInfo);
   };
 
   return (

@@ -1,5 +1,4 @@
 import React from "react";
-
 import PropTypes from "prop-types";
 
 import NoteListItem from "./noteListItem";
@@ -12,7 +11,7 @@ const ComponentInfo = ({ id, description, title, date }) => {
         <h1>Select note to display</h1>
       ) : (
         <NoteListItem
-          id={id ? id : null}
+          id={id}
           description={description}
           title={title}
           date={date}
