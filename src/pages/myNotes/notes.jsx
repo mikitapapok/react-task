@@ -35,16 +35,21 @@ const Notes = () => {
         setChangeDescriptionInputValue(element.target.value);
     };
 
-    const changeDescription = () => {
-        const changedItem = todos.find((todo) => todo.id === componentInfo.id);
-        changedItem.description = changeDescriptionInputValue;
-        setTodosFromLocalStorage(todos);
-        setIsEditModalOpen(false);
+    const submitFormChanges = () => {
+        const changedTodoList = todos.map((todo) => {
+            if (todo.id === componentInfo.id) {
+                todo.description = changeDescriptionInputValue;
+            }
+            return todo;
+        });
+
+        setTodosFromLocalStorage(changedTodoList);
+        closeModal();
     };
 
     const changePickedItem = (element) => {
         getItemInfo(element);
-        setIsEditModalOpen(true);
+        openModal();
     };
 
     const openModal = () => {
@@ -69,7 +74,7 @@ const Notes = () => {
                     <StyledList>
                         {todos.map((todo) => (
                             <StyledListComponent
-                                isActive={componentInfo && componentInfo.id === todo.id && true}
+                                isActive={componentInfo && componentInfo.id === todo.id}
                                 key={todo.id}
                             >
                                 <ListItemText
@@ -105,7 +110,7 @@ const Notes = () => {
                                 onChange={setDescription}
                                 value={changeDescriptionInputValue}
                             />
-                            <EditButton onClick={changeDescription}>Change</EditButton>
+                            <EditButton onClick={submitFormChanges}>Change</EditButton>
                         </ChangeDescription>
                     </ModalWindow>
                 </ModalUnstyled>
