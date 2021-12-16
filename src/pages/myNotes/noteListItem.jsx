@@ -4,9 +4,20 @@ import PropTypes from 'prop-types';
 
 import { StyledSpan, EditButton } from './styled';
 
-const NoteListItem = ({ getItemInfo, id, title, description, date, showId, openModal }) => {
+const NoteListItem = ({
+    getItemInfo,
+    id,
+    title,
+    description,
+    date,
+    showId,
+    openModal,
+    changePickedItem,
+}) => {
+    const formatDescription =
+        description.length > 20 ? `${description.slice(0, 20).trim()}...` : `${description}`;
     return (
-        <div onClick={getItemInfo} id={id}>
+        <div onClick={getItemInfo} id={id} onDoubleClick={changePickedItem}>
             <h2>{title}</h2>
             {showId && (
                 <p>
@@ -16,7 +27,7 @@ const NoteListItem = ({ getItemInfo, id, title, description, date, showId, openM
             )}
             <p>
                 <StyledSpan>Description: </StyledSpan>
-                {showId ? description : `${description.slice(0, 20).trim()}...`}
+                {showId ? description : `${formatDescription}`}
             </p>
             <p>
                 <StyledSpan>Date: </StyledSpan>
@@ -35,6 +46,7 @@ NoteListItem.propTypes = {
     getItemInfo: PropTypes.func,
     showId: PropTypes.bool,
     openModal: PropTypes.func,
+    changePickedItem: PropTypes.func,
 };
 
 export default NoteListItem;

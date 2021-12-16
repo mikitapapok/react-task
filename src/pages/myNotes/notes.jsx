@@ -6,6 +6,7 @@ import { ModalUnstyled } from '@mui/material';
 import ComponentInfo from './componentInfo';
 import NoteListItem from './noteListItem';
 import { todoList } from '../../constants/noteList';
+import { useLocalStorage } from '../../hooks/useLocaleStorage';
 import {
     Backdrop,
     ChangeDescription,
@@ -19,14 +20,16 @@ import {
 } from './styled';
 
 const Notes = () => {
-    const [initValue, setInitValue] = useState([]);
+    const [todosFromLocalStorage, setTodosFromLocalStorage] = useLocalStorage('todoList', todoList);
+
+    const [todos, setTodos] = useState([]);
     const [componentInfo, setComponentInfo] = useState({});
-    const [open, setOpen] = useState(false);
+    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [changeDescriptionInputValue, setChangeDescriptionInputValue] = useState('');
 
-    const localStorage = window.localStorage;
     useEffect(() => {
-        setInitValue(JSON.parse(localStorage.getItem('todoList')) || todoList);
+        setTodos(todosFromLocalStorage);
+        console.log(todosFromLocalStorage);
     }, []);
 
     const setDescription = (element) => {
@@ -34,21 +37,26 @@ const Notes = () => {
     };
 
     const changeDescription = () => {
-        const changedItem = initValue.find((todo) => todo.id === componentInfo.id);
+        const changedItem = todos.find((todo) => todo.id === componentInfo.id);
         changedItem.description = changeDescriptionInputValue;
-        localStorage.setItem('todoList', JSON.stringify(initValue));
-        setOpen(false);
+        setTodosFromLocalStorage(todos);
+        setIsEditModalOpen(false);
+    };
+
+    const changePickedItem = (element) => {
+        getItemInfo(element);
+        setIsEditModalOpen(true);
     };
 
     const openModal = () => {
-        setOpen(true);
+        setIsEditModalOpen(true);
     };
     const closeModal = () => {
-        setOpen(false);
+        setIsEditModalOpen(false);
     };
 
     const getItemInfo = (e) => {
-        const getCurrentItem = initValue.find((todo) => {
+        const getCurrentItem = todos.find((todo) => {
             return todo.id == e.currentTarget.id;
         });
         setComponentInfo(getCurrentItem);
@@ -60,11 +68,9 @@ const Notes = () => {
             <NotesList>
                 <Container>
                     <StyledList>
-                        {initValue.map((todo) => (
+                        {todos.map((todo) => (
                             <StyledListComponent
-                                isActive={
-                                    componentInfo && componentInfo.id === todo.id ? true : false
-                                }
+                                isActive={componentInfo && componentInfo.id === todo.id && true}
                                 key={todo.id}
                             >
                                 <ListItemText
@@ -76,6 +82,7 @@ const Notes = () => {
                                             description={todo.description}
                                             date={todo.date}
                                             getItemInfo={getItemInfo}
+                                            changePickedItem={changePickedItem}
                                         />
                                     }
                                 />
@@ -85,8 +92,12 @@ const Notes = () => {
                 </Container>
                 <ComponentInfo componentInfo={componentInfo} openModal={openModal} />
             </NotesList>
-            {open && (
-                <ModalUnstyled open={open} onClose={closeModal} BackdropComponent={Backdrop}>
+            {isEditModalOpen && (
+                <ModalUnstyled
+                    open={isEditModalOpen}
+                    onClose={closeModal}
+                    BackdropComponent={Backdrop}
+                >
                     <ModalWindow>
                         <h2>Change Item Description</h2>
                         <ChangeDescription>

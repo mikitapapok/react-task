@@ -54,7 +54,12 @@ export const StyledList = styled(List)({
 });
 
 export const EditButton = styled(Button)({
-    '&&': { marginTop: '20px ', backgroundColor: '#7fffd4 ', color: 'black ', fontWeight: 'bold ' },
+    '&.MuiButton-root': {
+        marginTop: '20px ',
+        backgroundColor: '#7fffd4 ',
+        color: 'black ',
+        fontWeight: 'bold ',
+    },
 });
 
 export const Backdrop = styled('div')({
