@@ -29,20 +29,18 @@ const Notes = () => {
 
     useEffect(() => {
         setTodos(todosFromLocalStorage);
-    }, []);
+    }, [todosFromLocalStorage]);
 
     const setDescription = (element) => {
         setChangeDescriptionInputValue(element.target.value);
     };
 
-    const submitFormChanges = () => {
-        const changedTodoList = todos.map((todo) => {
-            if (todo.id === componentInfo.id) {
-                todo.description = changeDescriptionInputValue;
-            }
-            return todo;
+    const submitFormChanges = (element) => {
+        let changedTodoList = todos.map((todo) => {
+            return todo.id === element.id
+                ? {...todo, description: changeDescriptionInputValue }
+                : todo;
         });
-
         setTodosFromLocalStorage(changedTodoList);
         closeModal();
     };
@@ -74,7 +72,7 @@ const Notes = () => {
                     <StyledList>
                         {todos.map((todo) => (
                             <StyledListComponent
-                                isActive={componentInfo && componentInfo.id === todo.id}
+                                isActive={componentInfo?.id === todo.id}
                                 key={todo.id}
                             >
                                 <ListItemText
@@ -110,7 +108,7 @@ const Notes = () => {
                                 onChange={setDescription}
                                 value={changeDescriptionInputValue}
                             />
-                            <EditButton onClick={submitFormChanges}>Change</EditButton>
+                            <EditButton onClick={()=>submitFormChanges(componentInfo)}>Change</EditButton>
                         </ChangeDescription>
                     </ModalWindow>
                 </ModalUnstyled>
