@@ -36,9 +36,9 @@ const Notes = () => {
     };
 
     const submitFormChanges = (element) => {
-        let changedTodoList = todos.map((todo) => {
+        const changedTodoList = todos.map((todo) => {
             return todo.id === element.id
-                ? {...todo, description: changeDescriptionInputValue }
+                ? { ...todo, description: changeDescriptionInputValue }
                 : todo;
         });
         setTodosFromLocalStorage(changedTodoList);
@@ -108,7 +108,9 @@ const Notes = () => {
                                 onChange={setDescription}
                                 value={changeDescriptionInputValue}
                             />
-                            <EditButton onClick={()=>submitFormChanges(componentInfo)}>Change</EditButton>
+                            <EditButton onClick={() => submitFormChanges(componentInfo)}>
+                                Change
+                            </EditButton>
                         </ChangeDescription>
                     </ModalWindow>
                 </ModalUnstyled>
