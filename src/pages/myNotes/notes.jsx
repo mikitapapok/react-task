@@ -29,7 +29,6 @@ const Notes = () => {
 
     useEffect(() => {
         setTodos(todosFromLocalStorage);
-        console.log(todosFromLocalStorage);
     }, []);
 
     const setDescription = (element) => {
