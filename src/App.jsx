@@ -1,8 +1,10 @@
 import React from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';
+
 import Notes from './pages/myNotes/notes';
 import Header from './pages/header/header';
 import SharedNotes from './pages/sharedNotes/SharedNotes';
-import { Routes, Route, Navigate } from 'react-router-dom';
+
 import About from './pages/about/About';
 import NotFound from './pages/notFound/notFound';
 

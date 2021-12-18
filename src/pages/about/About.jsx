@@ -1,7 +1,10 @@
 import React from 'react';
-import { PageTitle, SharedBox } from '../sharedNotes/styled';
+
 import Box from '@mui/material/Box';
 import { List, ListItemText } from '@mui/material';
+
+import { PageTitle } from '../sharedNotes/styled';
+import { SharedBox } from './styled';
 
 const About = () => {
     return (

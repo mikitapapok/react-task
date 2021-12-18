@@ -8,7 +8,7 @@ export const ErrorBox = styled('div')({
     marginTop: '50px',
 });
 
-export const ErrorTittle = styled('h2')({
+export const Tittle = styled('h2')({
     fontSize: '72px',
     color: 'darkred',
 });

@@ -6,7 +6,7 @@ import { PageTitle } from './styled';
 const SharedNotes = () => {
     return (
         <>
-            <PageTitle>THERE IS A LIST OF SHARED NOTES</PageTitle>
+            <PageTitle>there is a list of shared notes</PageTitle>
             <Notes condition={true} />
         </>
     );

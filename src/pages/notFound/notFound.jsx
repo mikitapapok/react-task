@@ -1,11 +1,11 @@
 import React from 'react';
 
-import { ErrorBox, ErrorText, ErrorTittle } from './styled';
+import { ErrorBox, ErrorText, Tittle } from './styled';
 
 const NotFound = () => {
     return (
         <ErrorBox>
-            <ErrorTittle>404</ErrorTittle>
+            <Tittle>404</Tittle>
             <ErrorText>Page not found. Please enter correct Url</ErrorText>
         </ErrorBox>
     );
