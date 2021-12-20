@@ -18,17 +18,17 @@ import {
     StyledList,
     StyledListComponent,
 } from './styled';
+import PropTypes from 'prop-types';
 
-const Notes = () => {
+const Notes = ({ condition }) => {
     const [todosFromLocalStorage, setTodosFromLocalStorage] = useLocalStorage('todoList', todoList);
-
     const [todos, setTodos] = useState([]);
     const [componentInfo, setComponentInfo] = useState({});
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [changeDescriptionInputValue, setChangeDescriptionInputValue] = useState('');
 
     useEffect(() => {
-        setTodos(todosFromLocalStorage);
+        setTodos(todosFromLocalStorage.filter((e) => (condition ? e.isShared : !e.isShared)));
     }, [todosFromLocalStorage]);
 
     const setDescription = (element) => {
@@ -36,7 +36,7 @@ const Notes = () => {
     };
 
     const submitFormChanges = (element) => {
-        const changedTodoList = todos.map((todo) => {
+        const changedTodoList = todosFromLocalStorage.map((todo) => {
             return todo.id === element.id
                 ? { ...todo, description: changeDescriptionInputValue }
                 : todo;
@@ -118,5 +118,7 @@ const Notes = () => {
         </>
     );
 };
-
+Notes.propTypes = {
+    condition: PropTypes.bool,
+};
 export default Notes;

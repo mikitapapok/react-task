@@ -12,7 +12,9 @@ export const Container = styled(Box)({
 });
 
 export const NotesList = styled('div')({
+    marginTop: '30px',
     display: 'flex',
+    justifyContent: 'center',
     alignItems: 'start',
 });
 
