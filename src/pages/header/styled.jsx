@@ -27,6 +27,10 @@ export const StyledLink = styled(NavLink)({
     },
 });
 
+export const LogOutLink = styled(StyledLink)({
+    marginLeft: '500px',
+});
+
 export const HeaderList = styled(List)({
     '&.MuiList-root': {
         display: 'flex',

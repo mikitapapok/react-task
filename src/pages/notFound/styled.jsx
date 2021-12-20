@@ -1,4 +1,5 @@
 import { styled } from '@mui/styles';
+import { StyledLink } from '../header/styled';
 
 export const ErrorBox = styled('div')({
     background: 'none',
@@ -16,4 +17,10 @@ export const Tittle = styled('h2')({
 export const ErrorText = styled('p')({
     fontSize: '56px',
     color: 'darkred',
+});
+
+export const ErrorBack = styled(StyledLink)({
+    color: 'red',
+    fontSize: '48px',
+    marginTop: '40px',
 });
