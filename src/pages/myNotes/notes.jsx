@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import {useSelector} from "react-redux";
 
 import { ListItemText } from '@mui/material';
 import { ModalUnstyled } from '@mui/material';
@@ -20,7 +21,9 @@ import {
 } from './styled';
 import PropTypes from 'prop-types';
 
+
 const Notes = ({ condition }) => {
+    const info=useSelector(state=>state.userInfo)
     const [todosFromLocalStorage, setTodosFromLocalStorage] = useLocalStorage('todoList', todoList);
     const [todos, setTodos] = useState([]);
     const [componentInfo, setComponentInfo] = useState({});
@@ -29,6 +32,7 @@ const Notes = ({ condition }) => {
 
     useEffect(() => {
         setTodos(todosFromLocalStorage.filter((e) => (condition ? e.isShared : !e.isShared)));
+        info
     }, [todosFromLocalStorage]);
 
     const setDescription = (element) => {
