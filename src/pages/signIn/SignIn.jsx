@@ -16,15 +16,21 @@ const ValidScheme = Yup.object().shape({
         .required('Please enter password'),
 });
 const SignIn = () => {
+    const [password, setPassword] = useState('');
+    const [email, setEmail] = useState('');
     const [isSign, setIsSign] = useState(false);
     const dispatch = useDispatch();
 
     useEffect(() => {
-        setIsSign(false);
+        setIsSign(true);
+        console.log(isSign);
         return () => {
-            setIsSign(true);
+            setIsSign(false);
+            setEmail('');
+            setPassword('');
         };
-    }, []);
+    }, [password, email]);
+
     const { data } = useQuery(
         'currentUser',
         async () => {
@@ -32,12 +38,11 @@ const SignIn = () => {
             return response.data;
         },
         {
-            enabled: !isSign,
+            enabled: isSign,
         }
     );
 
     const singInHandler = (inputEmail, inputPassword) => {
-        setIsSign(true);
         const currentUser = data.find(
             (dataElement) =>
                 dataElement.email == inputEmail && dataElement.password == inputPassword
@@ -54,6 +59,11 @@ const SignIn = () => {
             }}
             validationSchema={ValidScheme}
             onSubmit={(values, actions) => {
+                setPassword(values.password);
+                setEmail(values.email);
+                if (values.password && values.email) {
+                    setIsSign(true);
+                }
                 console.log(data);
                 singInHandler(values.email, values.password);
                 actions.resetForm({
