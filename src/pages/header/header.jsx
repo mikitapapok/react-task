@@ -26,21 +26,15 @@ const Header = () => {
 
             <HeaderList>
                 <HeaderListItem>
-                    <StyledLink exact to={'/notes'}>
-                        My notes
-                    </StyledLink>
+                    <StyledLink to={'/notes'}>My notes</StyledLink>
                 </HeaderListItem>
                 <HeaderListItem>
-                    <StyledLink exact to="/shared-notes">
-                        Shared Notes
-                    </StyledLink>
+                    <StyledLink to="/shared-notes">Shared Notes</StyledLink>
                 </HeaderListItem>
                 <HeaderListItem>
-                    <StyledLink exact to="/about">
-                        About
-                    </StyledLink>
+                    <StyledLink to="/about">About</StyledLink>
                     {access && (
-                        <LogOutLink exact to="/" onClick={logOutHandler}>
+                        <LogOutLink to="/" onClick={logOutHandler}>
                             log out
                         </LogOutLink>
                     )}

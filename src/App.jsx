@@ -17,15 +17,18 @@ function App() {
     store.subscribe(() => setAccess(store.getState().userInfo.access));
     useEffect(() => {
         setAccess(store.getState().userInfo.access);
-        navigate(location.pathname)
+        navigate(location.pathname);
     }, []);
     return (
         <div className="app">
             <Header />
             <Routes>
-                    <Route path="/notes" element={access ?<Notes />:<Navigate to="/not-found" />} />
-                    <Route path="/shared-notes" element={access?<SharedNotes />:<Navigate to="/not-found" />} />
-                    <Route path="/" element={access?<Navigate to="/notes" />:<SignIn />} />
+                <Route path="/notes" element={access ? <Notes /> : <Navigate to="/not-found" />} />
+                <Route
+                    path="/shared-notes"
+                    element={access ? <SharedNotes /> : <Navigate to="/not-found" />}
+                />
+                <Route path="/" element={access ? <Navigate to="/notes" /> : <SignIn />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/not-found" element={<NotFound />} />
                 <Route path="/*" element={<Navigate to="/not-found" />} />
