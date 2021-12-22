@@ -44,7 +44,9 @@ const Notes = ({ condition }) => {
                 ? { ...todo, description: changeDescriptionInputValue }
                 : todo;
         });
+        const currentElement=changedTodoList.find(todo=>todo.id===element.id)
         setTodosFromLocalStorage(changedTodoList);
+        setComponentInfo(currentElement)
         closeModal();
     };
 

@@ -5,7 +5,7 @@ import { store } from './redux/store';
 import Notes from './pages/myNotes/notes';
 import Header from './pages/header/header';
 import SharedNotes from './pages/sharedNotes/SharedNotes';
-import SignUp from './pages/signIn/signUp'
+import SignUp from './pages/signIn/signUp';
 import About from './pages/about/About';
 import NotFound from './pages/notFound/notFound';
 import SignIn from './pages/signIn/SignIn';
@@ -23,14 +23,17 @@ function App() {
         <div className="app">
             <Header />
             <Routes>
-                <Route path='/signUp' element={access?<Navigate to='/notes'/>:<SignUp />}/>
+                <Route path="/signUp" element={access ? <Navigate to="/notes" /> : <SignUp />} />
                 <Route path="/notes" element={access ? <Notes /> : <Navigate to="/not-found" />} />
-                <Route path="/signIn" element={access?<Navigate to='/notes'/>:<SignIn/>} />
+                <Route path="/signIn" element={access ? <Navigate to="/notes" /> : <SignIn />} />
                 <Route
                     path="/shared-notes"
                     element={access ? <SharedNotes /> : <Navigate to="/not-found" />}
                 />
-                <Route path="/" element={access ? <Navigate to="/notes" /> : <Navigate to="/signIn" />} />
+                <Route
+                    path="/"
+                    element={access ? <Navigate to="/notes" /> : <Navigate to="/signIn" />}
+                />
                 <Route path="/about" element={<About />} />
                 <Route path="/not-found" element={<NotFound />} />
                 <Route path="/*" element={<Navigate to="/not-found" />} />
