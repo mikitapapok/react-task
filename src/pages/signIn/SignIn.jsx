@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, {useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useQuery } from 'react-query';
 import { Formik } from 'formik';
 import axios from 'axios';
 import * as Yup from 'yup';
-import { ErrorTip, SignForm, SignInButton, StyledField, ValidContainer } from './styled';
+import { ErrorTip, RegularText, SignForm, SignInButton, StyledField, StyledLink, StyledTitle, ValidContainer } from './styled';
 
 import { serverPath } from '../../constants/noteList';
 import { getUserInfo } from '../../redux/actions/actionCreators';
@@ -16,41 +16,35 @@ const ValidScheme = Yup.object().shape({
         .required('Please enter password'),
 });
 const SignIn = () => {
-    const [password, setPassword] = useState('');
-    const [email, setEmail] = useState('');
-    const [isSign, setIsSign] = useState(false);
+    const [dataToSend,SetDataToSend]=useState(null)
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        setIsSign(true);
-        console.log(isSign);
-        return () => {
-            setIsSign(false);
-            setEmail('');
-            setPassword('');
-        };
-    }, [password, email]);
-
-    const { data } = useQuery(
-        'currentUser',
-        async () => {
-            const response = await axios.get(serverPath);
-            return response.data;
-        },
-        {
-            enabled: isSign,
-        }
-    );
-
-    const singInHandler = (inputEmail, inputPassword) => {
-        const currentUser = data.find(
+    const singInHandler =async (inputEmail, inputPassword) => {
+        const response = await axios.get(serverPath);
+        console.log(response.data)
+        
+        const currentUser = response.data.find(
             (dataElement) =>
                 dataElement.email == inputEmail && dataElement.password == inputPassword
         );
         if (currentUser) {
             dispatch(getUserInfo(currentUser));
         }
+        SetDataToSend(null)
+        return response.data;
     };
+
+ useQuery(
+        'currentUser',
+        async () => {
+            const data= await singInHandler(dataToSend[0],dataToSend[1])
+            return data
+        },
+        {
+            enabled: !!dataToSend,
+        }
+    );
+
     return (
         <Formik
             initialValues={{
@@ -59,13 +53,8 @@ const SignIn = () => {
             }}
             validationSchema={ValidScheme}
             onSubmit={(values, actions) => {
-                setPassword(values.password);
-                setEmail(values.email);
-                if (values.password && values.email) {
-                    setIsSign(true);
-                }
-                console.log(data);
-                singInHandler(values.email, values.password);
+                const validData=[values.email,values.password]
+                SetDataToSend(validData)
                 actions.resetForm({
                     values: {
                         email: '',
@@ -76,6 +65,7 @@ const SignIn = () => {
         >
             {({ errors, touched }) => (
                 <SignForm>
+                    <StyledTitle>sign in</StyledTitle>
                     <ValidContainer>
                         <label htmlFor="email">Pleas Enter Email</label>
                         <StyledField
@@ -84,17 +74,19 @@ const SignIn = () => {
                             name="email"
                             placeholder="example@ex.com"
                         />
-                        {errors.email && touched.email ? <ErrorTip>{errors.email}</ErrorTip> : null}
+                        {errors.email && touched.email && <ErrorTip>{errors.email}</ErrorTip>}
                     </ValidContainer>
                     <ValidContainer>
                         <label htmlFor="password">Pleas Enter Email</label>
                         <StyledField id="password" name="password" placeholder="password" />
-                        {errors.password && touched.password ? (
+                        {errors.password && touched.password && (
                             <ErrorTip>{errors.password}</ErrorTip>
-                        ) : null}
+                        )}
                     </ValidContainer>
 
                     <SignInButton type="submit">Sign In</SignInButton>
+                    <RegularText>Or</RegularText>
+                    <StyledLink to='/signUp'>Sign up</StyledLink>
                 </SignForm>
             )}
         </Formik>
