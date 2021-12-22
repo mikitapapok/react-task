@@ -1,13 +1,22 @@
 import axios from 'axios';
 import { Formik } from 'formik';
-import React, { useState } from 'react';
-import { useQuery } from 'react-query';
+import React from 'react';
+import { useMutation } from 'react-query';
 import { useDispatch } from 'react-redux';
 import * as Yup from 'yup';
 
 import { serverPath } from '../../constants/noteList';
 import { getUserInfo } from '../../redux/actions/actionCreators';
-import { SignForm, ValidContainer, StyledField, ErrorTip, SignInButton, RegularText, StyledLink, StyledTitle } from './styled';
+import {
+    SignForm,
+    ValidContainer,
+    StyledField,
+    ErrorTip,
+    SignInButton,
+    RegularText,
+    StyledLink,
+    StyledTitle,
+} from './styled';
 
 const ValidScheme = Yup.object().shape({
     email: Yup.string().email('Please use @ and . for adding email').required('Please enter Email'),
@@ -17,26 +26,15 @@ const ValidScheme = Yup.object().shape({
     firstName: Yup.string().required('Please enter your name'),
     lastName: Yup.string().required('Enter your last name'),
     dateOfBirth: Yup.string().required('Please pick date of birth'),
-    confirmPassword: Yup.string().oneOf([Yup.ref('password'),null],'Passwords must match ')
+    confirmPassword: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match '),
 });
 const SignUp = () => {
-    const [newUser, setNewUser] = useState(null);
-    const dispatch=useDispatch()
-    const sendDataToServer = async (data) => {
-        const resp = await axios.post(serverPath, data);
-        dispatch(getUserInfo(data))
-        setNewUser(null)
-        return resp.status;
-    };
-    useQuery(
-        'addUser',
-        async () => {
-            sendDataToServer(newUser);
-        },
-        {
-            enabled: !!newUser,
-        }
-    );
+    const dispatch = useDispatch();
+    const mutation = useMutation((dataToPost) => {
+        dispatch(getUserInfo(dataToPost));
+        return axios.post(serverPath, dataToPost);
+    });
+
     return (
         <Formik
             initialValues={{
@@ -45,10 +43,10 @@ const SignUp = () => {
                 lastName: '',
                 firstName: '',
                 dateOfBirth: '',
-                confirmPassword:''
+                confirmPassword: '',
             }}
             validationSchema={ValidScheme}
-            onSubmit={async (values, actions) => {
+            onSubmit={async (values) => {
                 const dataToSend = {
                     firstName: values.firstName,
                     lastName: values.lastName,
@@ -56,8 +54,7 @@ const SignUp = () => {
                     password: values.password,
                     email: values.email,
                 };
-                setNewUser(dataToSend);
-                actions.resetForm();
+                mutation.mutate(dataToSend);
             }}
         >
             {({ errors, touched }) => (
@@ -66,7 +63,7 @@ const SignUp = () => {
                     <ValidContainer>
                         <label htmlFor="firstName">Please Enter First namr</label>
                         <StyledField id="firstName" name="firstName" placeholder="John" />
-                        {errors.firstName && touched.firstName &&(
+                        {errors.firstName && touched.firstName && (
                             <ErrorTip>{errors.firstName}</ErrorTip>
                         )}
                     </ValidContainer>
@@ -92,21 +89,33 @@ const SignUp = () => {
                             name="email"
                             placeholder="example@ex.com"
                         />
-                        {errors.email && touched.email && <ErrorTip>{errors.email}</ErrorTip> }
+                        {errors.email && touched.email && <ErrorTip>{errors.email}</ErrorTip>}
                     </ValidContainer>
                     <ValidContainer>
                         <label htmlFor="password">Please Enter password</label>
-                        <StyledField id="password" name="password" placeholder="password" />
+                        <StyledField
+                            id="password"
+                            type="password"
+                            name="password"
+                            placeholder="password"
+                        />
                         {errors.email && touched.email && <ErrorTip>{errors.email}</ErrorTip>}
                     </ValidContainer>
                     <ValidContainer>
                         <label htmlFor="confirmPassword">Confirm password</label>
-                        <StyledField id="confirmPassword" name="confirmPassword" placeholder="confirm password" />
-                        {errors.confirmPassword && touched.confirmPassword && <ErrorTip>{errors.confirmPassword}</ErrorTip> }
+                        <StyledField
+                            id="confirmPassword"
+                            type="password"
+                            name="confirmPassword"
+                            placeholder="confirm password"
+                        />
+                        {errors.confirmPassword && touched.confirmPassword && (
+                            <ErrorTip>{errors.confirmPassword}</ErrorTip>
+                        )}
                     </ValidContainer>
                     <SignInButton type="submit">Sign up</SignInButton>
                     <RegularText>or</RegularText>
-                    <StyledLink to='/'>Sign in</StyledLink>
+                    <StyledLink to="/">Sign in</StyledLink>
                 </SignForm>
             )}
         </Formik>

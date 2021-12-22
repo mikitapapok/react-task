@@ -1,4 +1,4 @@
-import React, {useState } from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useQuery } from 'react-query';
 import { Formik } from 'formik';
@@ -8,6 +8,7 @@ import { ErrorTip, RegularText, SignForm, SignInButton, StyledField, StyledLink,
 
 import { serverPath } from '../../constants/noteList';
 import { getUserInfo } from '../../redux/actions/actionCreators';
+
 
 const ValidScheme = Yup.object().shape({
     email: Yup.string().email('Please use @ and . for adding email').required('please enter Email'),
@@ -19,48 +20,44 @@ const SignIn = () => {
     const [dataToSend,SetDataToSend]=useState(null)
     const dispatch = useDispatch();
 
-    const singInHandler =async (inputEmail, inputPassword) => {
-        const response = await axios.get(serverPath);
-        console.log(response.data)
+    const singInHandler =(inputEmail, inputPassword) => {
+        axios.get(serverPath).then(response=>{
+            const currentUser = response.data.find(
+                (dataElement) =>
+                    dataElement.email == inputEmail && dataElement.password == inputPassword
+            );
+            if (currentUser) {
+                dispatch(getUserInfo(currentUser));
+            }
+            SetDataToSend(null)
+        })
+
         
-        const currentUser = response.data.find(
-            (dataElement) =>
-                dataElement.email == inputEmail && dataElement.password == inputPassword
-        );
-        if (currentUser) {
-            dispatch(getUserInfo(currentUser));
-        }
-        SetDataToSend(null)
-        return response.data;
+       
     };
 
- useQuery(
+
+const query=useQuery(
         'currentUser',
-        async () => {
-            const data= await singInHandler(dataToSend[0],dataToSend[1])
-            return data
-        },
+        ()=>{
+            console.log('eeeee')
+            singInHandler(dataToSend[0],dataToSend[1])},
         {
             enabled: !!dataToSend,
         }
     );
 
-    return (
-        <Formik
+    return  (
+         <Formik
             initialValues={{
                 email: '',
                 password: '',
             }}
             validationSchema={ValidScheme}
-            onSubmit={(values, actions) => {
+            onSubmit={(values) => {
                 const validData=[values.email,values.password]
                 SetDataToSend(validData)
-                actions.resetForm({
-                    values: {
-                        email: '',
-                        password: '',
-                    },
-                });
+                query
             }}
         >
             {({ errors, touched }) => (
@@ -90,6 +87,7 @@ const SignIn = () => {
                 </SignForm>
             )}
         </Formik>
+       
     );
 };
 
