@@ -10,18 +10,17 @@ import { useLocalStorage } from '../../hooks/useLocaleStorage';
 import {
     Backdrop,
     ChangeDescription,
-    StyledInput,
     Container,
     EditButton,
     ModalWindow,
     NotesList,
     StyledList,
     StyledListComponent,
+    StyledField,
 } from './styled';
 import PropTypes from 'prop-types';
 
 const Notes = ({ condition }) => {
-
     const [todosFromLocalStorage, setTodosFromLocalStorage] = useLocalStorage('todoList', todoList);
     const [todos, setTodos] = useState([]);
     const [componentInfo, setComponentInfo] = useState({});
@@ -29,7 +28,7 @@ const Notes = ({ condition }) => {
     const [changeDescriptionInputValue, setChangeDescriptionInputValue] = useState('');
 
     useEffect(() => {
-        setTodos(todosFromLocalStorage.filter((e) => (condition ? e.isShared : !e.isShared)));;
+        setTodos(todosFromLocalStorage.filter((e) => (condition ? e.isShared : !e.isShared)));
     }, [todosFromLocalStorage]);
 
     const setDescription = (element) => {
@@ -106,10 +105,11 @@ const Notes = ({ condition }) => {
                     <ModalWindow>
                         <h2>Change Item Description</h2>
                         <ChangeDescription>
-                            <StyledInput
+                            <StyledField
                                 type="text"
                                 onChange={setDescription}
                                 value={changeDescriptionInputValue}
+                                label="change value"
                             />
                             <EditButton onClick={() => submitFormChanges(componentInfo)}>
                                 Change

@@ -1,29 +1,22 @@
-import axios from 'axios';
 import { Formik } from 'formik';
 import React from 'react';
-import { useMutation } from 'react-query';
 import { useDispatch } from 'react-redux';
 
-import { serverPath } from '../../constants/noteList';
 import { getUserInfo } from '../../redux/actions/actionCreators';
 import { initValuesForSignUp, ValidSchemeForSignUp } from './validation';
-import {
-    SignForm,
-    ValidContainer,
-    StyledField,
-    ErrorTip,
-    SignInButton,
-    RegularText,
-    StyledLink,
-    StyledTitle,
-} from './styled';
+import { SignUpForm, SignForm, SignInButton, StyledLink, StyledTitle } from './styled';
+import ValidInput from './validInput';
+import { useMutationDataServer } from '../../hooks/mutation/dataServerMutation';
 
 const SignUp = () => {
     const dispatch = useDispatch();
-    const mutation = useMutation((dataToPost) => {
-        dispatch(getUserInfo(dataToPost));
-        return axios.post(serverPath, dataToPost);
-    });
+
+    const mutation = useMutationDataServer();
+
+    const loadDataToServer = (dataToSend) => {
+        dispatch(getUserInfo(dataToSend));
+        mutation.mutate(dataToSend);
+    };
 
     return (
         <Formik
@@ -37,68 +30,57 @@ const SignUp = () => {
                     password: values.password,
                     email: values.email,
                 };
-                mutation.mutate(dataToSend);
+                loadDataToServer(dataToSend);
             }}
         >
-            {({ errors, touched }) => (
+            {({ errors }) => (
                 <SignForm>
                     <StyledTitle>sign up</StyledTitle>
-                    <ValidContainer>
-                        <label htmlFor="firstName">Please Enter First namr</label>
-                        <StyledField id="firstName" name="firstName" placeholder="John" />
-                        {errors.firstName && touched.firstName && (
-                            <ErrorTip>{errors.firstName}</ErrorTip>
-                        )}
-                    </ValidContainer>
-                    <ValidContainer>
-                        <label htmlFor="lastName">Please Enter last name</label>
-                        <StyledField id="lastName" name="lastName" placeholder="Doe" />
-                        {errors.lastName && touched.lastName && (
-                            <ErrorTip>{errors.lastName}</ErrorTip>
-                        )}
-                    </ValidContainer>
-                    <ValidContainer>
-                        <label htmlFor="dateOfBirth">Please Enter date of birth</label>
-                        <StyledField id="dateOfBirth" type="date" name="dateOfBirth" />
-                        {errors.dateOfBirth && touched.dateOfBirth && (
-                            <ErrorTip>{errors.dateOfBirth}</ErrorTip>
-                        )}
-                    </ValidContainer>
-                    <ValidContainer>
-                        <label htmlFor="email">Please Enter Email</label>
-                        <StyledField
-                            id="email"
-                            type="email"
+                    <SignUpForm>
+                        <ValidInput
+                            name="firstName"
+                            label="Enter first name"
+                            error={errors.firstName}
+                            type="text"
+                            autoComplete="on"
+                        />
+                        <ValidInput
+                            name="lastName"
+                            label="Enter last name"
+                            error={errors.lastName}
+                            type="text"
+                            autoComplete="on"
+                        />
+                        <ValidInput
+                            name="dateOfBirth"
+                            error={errors.dateOfBirth}
+                            type="date"
+                            autoComplete="off"
+                        />
+                        <ValidInput
                             name="email"
-                            placeholder="example@ex.com"
+                            label="Enter email"
+                            error={errors.email}
+                            type="email"
+                            autoComplete="on"
                         />
-                        {errors.email && touched.email && <ErrorTip>{errors.email}</ErrorTip>}
-                    </ValidContainer>
-                    <ValidContainer>
-                        <label htmlFor="password">Please Enter password</label>
-                        <StyledField
-                            id="password"
-                            type="password"
+                        <ValidInput
                             name="password"
-                            placeholder="password"
-                        />
-                        {errors.email && touched.email && <ErrorTip>{errors.email}</ErrorTip>}
-                    </ValidContainer>
-                    <ValidContainer>
-                        <label htmlFor="confirmPassword">Confirm password</label>
-                        <StyledField
-                            id="confirmPassword"
+                            label="Enter password"
+                            error={errors.password}
                             type="password"
-                            name="confirmPassword"
-                            placeholder="confirm password"
+                            autoComplete="off"
                         />
-                        {errors.confirmPassword && touched.confirmPassword && (
-                            <ErrorTip>{errors.confirmPassword}</ErrorTip>
-                        )}
-                    </ValidContainer>
+                        <ValidInput
+                            name="confirmPassword"
+                            label="Confirm password"
+                            error={errors.confirmPassword}
+                            type="password"
+                            autoComplete="off"
+                        />
+                    </SignUpForm>
                     <SignInButton type="submit">Sign up</SignInButton>
-                    <RegularText>or</RegularText>
-                    <StyledLink to="/">Sign in</StyledLink>
+                    <StyledLink to="/">←Back to sign in page</StyledLink>
                 </SignForm>
             )}
         </Formik>

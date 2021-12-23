@@ -4,7 +4,7 @@ import { List, ListItemText } from '@mui/material';
 
 export const StyledHeader = styled('header')({
     width: '100%',
-    padding: '10px 10px 10px 40px',
+    padding: '10px 50px 10px 40px',
     backgroundColor: 'cornflowerblue',
     display: 'flex',
     alignItems: 'center',
@@ -29,13 +29,13 @@ export const StyledLink = styled(NavLink)({
 });
 
 export const LogOutLink = styled(StyledLink)({
-    marginLeft: '500px',
+    marginLeft: 'auto',
 });
 
 export const HeaderList = styled(List)({
     '&.MuiList-root': {
         display: 'flex',
-        marginLeft: '400px',
+        marginLeft: '25vw',
     },
 });
 
@@ -43,6 +43,7 @@ export const HeaderListItem = styled(ListItemText)({
     '&:not(:first-child)': {
         marginLeft: '30px',
         fontSize: '24px',
+        whiteSpace: 'no-wrap',
     },
 });
 export const StyledLogoLink = styled(Link)({

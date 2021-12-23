@@ -78,4 +78,4 @@ export const todoList = [
     },
 ];
 
-export const serverPath='https://powerful-bastion-72531.herokuapp.com/users'
+export const serverPath = 'https://powerful-bastion-72531.herokuapp.com/users';

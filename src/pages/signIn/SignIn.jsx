@@ -1,84 +1,73 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useQuery } from 'react-query';
+
 import { Formik } from 'formik';
-import axios from 'axios';
 
-import {
-    ErrorTip,
-    RegularText,
-    SignForm,
-    SignInButton,
-    StyledField,
-    StyledLink,
-    StyledTitle,
-    ValidContainer,
-} from './styled';
+import { RegularText, SignForm, SignInButton, StyledLink, StyledTitle, SignInForm } from './styled';
 
-import { serverPath } from '../../constants/noteList';
 import { getUserInfo } from '../../redux/actions/actionCreators';
 import { initValuesForLogIn, ValidSchemeForLogIn } from './validation';
+import { useQueryToLogin } from '../../hooks/query/loginQuery';
+import { fetchUsers } from '../../services/userService';
+import ValidInput from './validInput';
 
 const SignIn = () => {
-    const [userCredentials, setUserCredentials] = useState(null);
+    const [userCredentials, setUserCredentials] = useState({});
     const dispatch = useDispatch();
-    const dataFromServer = axios.get(serverPath);
 
-    const singInHandler = async (inputEmail, inputPassword) => {
-        const response = await dataFromServer;
-        const currentUser = response.data.find(
-            (dataElement) =>
-                dataElement.email == inputEmail && dataElement.password == inputPassword
+    const { data } = useQueryToLogin('currentUser', () => fetchUsers(), {
+        enabled: !!userCredentials,
+    });
+
+    const singInHandler = ({ email, password }) => {
+        const currentUser = data.data.find(
+            (dataElement) => dataElement.email == email && dataElement.password == password
         );
         if (currentUser) {
             dispatch(getUserInfo(currentUser));
+            return true;
         }
-        setUserCredentials(null);
+        setUserCredentials({});
+        return false;
     };
-
-    const query = useQuery(
-        'currentUser',
-        () => {
-            singInHandler(userCredentials.email, userCredentials.password);
-        },
-        {
-            enabled: !!userCredentials,
-        }
-    );
-    useEffect(() => query, [userCredentials]);
 
     return (
         <Formik
             initialValues={initValuesForLogIn}
             validationSchema={ValidSchemeForLogIn}
-            onSubmit={(values) => {
+            onSubmit={(values, actions) => {
                 setUserCredentials({ email: values.email, password: values.password });
+                const isCredentialsCorrect = singInHandler(values);
+                if (!isCredentialsCorrect) {
+                    alert('wrong email or password. Try again or sign up');
+                    actions.resetForm();
+                }
             }}
         >
-            {({ errors, touched }) => (
+            {({ errors }) => (
                 <SignForm>
                     <StyledTitle>sign in</StyledTitle>
-                    <ValidContainer>
-                        <label htmlFor="email">Pleas Enter Email</label>
-                        <StyledField
-                            id="email"
+                    <SignInForm>
+                        <ValidInput
                             type="email"
                             name="email"
-                            placeholder="example@ex.com"
+                            label="Enter email"
+                            error={errors.email}
+                            autoComplete="on"
                         />
-                        {errors.email && touched.email && <ErrorTip>{errors.email}</ErrorTip>}
-                    </ValidContainer>
-                    <ValidContainer>
-                        <label htmlFor="password">Pleas Enter Email</label>
-                        <StyledField id="password" name="password" placeholder="password" />
-                        {errors.password && touched.password && (
-                            <ErrorTip>{errors.password}</ErrorTip>
-                        )}
-                    </ValidContainer>
+                        <ValidInput
+                            type="password"
+                            name="password"
+                            label="Enter password"
+                            error={errors.password}
+                            autoComplete="off"
+                        />
+                    </SignInForm>
 
                     <SignInButton type="submit">Sign In</SignInButton>
-                    <RegularText>Or</RegularText>
-                    <StyledLink to="/signUp">Sign up</StyledLink>
+                    <RegularText>
+                        If you do not sign up, follow <StyledLink to="/signUp">here</StyledLink>{' '}
+                    </RegularText>
                 </SignForm>
             )}
         </Formik>

@@ -1,7 +1,7 @@
 import { styled } from '@mui/styles';
 import { NavLink } from 'react-router-dom';
-import { Field, Form } from 'formik';
-import { Button } from '@mui/material';
+import { Form } from 'formik';
+import { TextField, Button } from '@mui/material';
 
 export const SignForm = styled(Form)({
     background: 'white',
@@ -13,15 +13,30 @@ export const SignForm = styled(Form)({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'start',
     '&&': {
-        padding: '20px 0',
+        padding: '20px 50px',
     },
 });
 
-export const StyledField = styled(Field)({
+export const SignUpForm = styled('div')({
+    marginTop: '10px',
+    display: 'grid',
+    gridTemplateColumns: '1fr 1fr',
+    gridTemplateRows: '1fr',
+    columnGap: '10px',
+    rowGap: '40px',
+});
+export const SignInForm = styled('div')({
+    width: '100%',
+    marginTop: '10px',
+    display: 'grid',
+    gridTemplateColumns: '1fr ',
+    rowGap: '40px',
+});
+export const StyledField = styled(TextField)({
     padding: '5px',
-    width: '200px',
+    width: '100%',
     borderRadius: '5px',
     border: '1px solid grey',
     marginTop: '5px',
@@ -32,41 +47,36 @@ export const ValidContainer = styled('div')({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    '&:not(:first-child)': {
-        marginTop: '40px',
-    },
-});
-export const ErrorTip = styled('div')({
-    position: 'absolute',
-    color: 'red',
-    top: ' 55px',
-    left: '4px',
-    width: '300px',
 });
 
 export const SignInButton = styled(Button)({
     '&.MuiButton-root': {
         marginTop: '50px',
-        background: 'greenyellow',
+        width: '100%',
+        background: 'cornflowerblue',
         fontWeight: 'bold',
+        color: 'white',
+        '&:hover': {
+            background: 'lightblue',
+        },
     },
 });
 
 export const StyledLink = styled(NavLink)({
     textDecoration: 'none',
     marginTop: '20px',
-    fontSize: '24px',
+    fontSize: '16px',
     color: 'cadetBlue',
     '&.active': {
         color: 'deeppink',
     },
 });
 
-export const RegularText = styled('p')({
-    marginTop: '10px',
+export const RegularText = styled('div')({
+    marginTop: '24px',
 });
 
 export const StyledTitle = styled('h2')({
-    color: 'darkgray',
+    color: 'black',
     textTransform: 'upperCase',
 });

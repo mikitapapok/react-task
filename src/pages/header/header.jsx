@@ -32,14 +32,14 @@ const Header = ({ logAccess }) => {
                     <StyledLink to="/shared-notes">shared notes</StyledLink>
                 </HeaderListItem>
                 <HeaderListItem>
-                    <StyledLink to="/about">about</StyledLink>
-                    {logAccess && (
+                    <StyledLink to="/about">about</StyledLink>                    
+                </HeaderListItem>
+            </HeaderList>
+            {logAccess && (
                         <LogOutLink to="/" onClick={logOutHandler}>
                             log out
                         </LogOutLink>
                     )}
-                </HeaderListItem>
-            </HeaderList>
         </StyledHeader>
     );
 };
