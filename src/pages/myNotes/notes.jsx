@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 
 import { ListItemText } from '@mui/material';
 import { ModalUnstyled } from '@mui/material';
@@ -22,7 +21,7 @@ import {
 import PropTypes from 'prop-types';
 
 const Notes = ({ condition }) => {
-    const info = useSelector((state) => state.userInfo);
+
     const [todosFromLocalStorage, setTodosFromLocalStorage] = useLocalStorage('todoList', todoList);
     const [todos, setTodos] = useState([]);
     const [componentInfo, setComponentInfo] = useState({});
@@ -30,8 +29,7 @@ const Notes = ({ condition }) => {
     const [changeDescriptionInputValue, setChangeDescriptionInputValue] = useState('');
 
     useEffect(() => {
-        setTodos(todosFromLocalStorage.filter((e) => (condition ? e.isShared : !e.isShared)));
-        info;
+        setTodos(todosFromLocalStorage.filter((e) => (condition ? e.isShared : !e.isShared)));;
     }, [todosFromLocalStorage]);
 
     const setDescription = (element) => {
@@ -44,9 +42,9 @@ const Notes = ({ condition }) => {
                 ? { ...todo, description: changeDescriptionInputValue }
                 : todo;
         });
-        const currentElement=changedTodoList.find(todo=>todo.id===element.id)
+        const currentElement = changedTodoList.find((todo) => todo.id === element.id);
         setTodosFromLocalStorage(changedTodoList);
-        setComponentInfo(currentElement)
+        setComponentInfo(currentElement);
         closeModal();
     };
 

@@ -1,63 +1,58 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useQuery } from 'react-query';
 import { Formik } from 'formik';
 import axios from 'axios';
-import * as Yup from 'yup';
-import { ErrorTip, RegularText, SignForm, SignInButton, StyledField, StyledLink, StyledTitle, ValidContainer } from './styled';
+
+import {
+    ErrorTip,
+    RegularText,
+    SignForm,
+    SignInButton,
+    StyledField,
+    StyledLink,
+    StyledTitle,
+    ValidContainer,
+} from './styled';
 
 import { serverPath } from '../../constants/noteList';
 import { getUserInfo } from '../../redux/actions/actionCreators';
+import { initValuesForLogIn, ValidSchemeForLogIn } from './validation';
 
-
-const ValidScheme = Yup.object().shape({
-    email: Yup.string().email('Please use @ and . for adding email').required('please enter Email'),
-    password: Yup.string()
-        .min(3, 'password must contain at least 3 symblos')
-        .required('Please enter password'),
-});
 const SignIn = () => {
-    const [dataToSend,SetDataToSend]=useState(null)
+    const [userCredentials, setUserCredentials] = useState(null);
     const dispatch = useDispatch();
+    const dataFromServer = axios.get(serverPath);
 
-    const singInHandler =(inputEmail, inputPassword) => {
-        axios.get(serverPath).then(response=>{
-            const currentUser = response.data.find(
-                (dataElement) =>
-                    dataElement.email == inputEmail && dataElement.password == inputPassword
-            );
-            if (currentUser) {
-                dispatch(getUserInfo(currentUser));
-            }
-            SetDataToSend(null)
-        })
-
-        
-       
+    const singInHandler = async (inputEmail, inputPassword) => {
+        const response = await dataFromServer;
+        const currentUser = response.data.find(
+            (dataElement) =>
+                dataElement.email == inputEmail && dataElement.password == inputPassword
+        );
+        if (currentUser) {
+            dispatch(getUserInfo(currentUser));
+        }
+        setUserCredentials(null);
     };
 
-
-const query=useQuery(
+    const query = useQuery(
         'currentUser',
-        ()=>{
-            console.log('eeeee')
-            singInHandler(dataToSend[0],dataToSend[1])},
+        () => {
+            singInHandler(userCredentials.email, userCredentials.password);
+        },
         {
-            enabled: !!dataToSend,
+            enabled: !!userCredentials,
         }
     );
+    useEffect(() => query, [userCredentials]);
 
-    return  (
-         <Formik
-            initialValues={{
-                email: '',
-                password: '',
-            }}
-            validationSchema={ValidScheme}
+    return (
+        <Formik
+            initialValues={initValuesForLogIn}
+            validationSchema={ValidSchemeForLogIn}
             onSubmit={(values) => {
-                const validData=[values.email,values.password]
-                SetDataToSend(validData)
-                query
+                setUserCredentials({ email: values.email, password: values.password });
             }}
         >
             {({ errors, touched }) => (
@@ -83,11 +78,10 @@ const query=useQuery(
 
                     <SignInButton type="submit">Sign In</SignInButton>
                     <RegularText>Or</RegularText>
-                    <StyledLink to='/signUp'>Sign up</StyledLink>
+                    <StyledLink to="/signUp">Sign up</StyledLink>
                 </SignForm>
             )}
         </Formik>
-       
     );
 };
 

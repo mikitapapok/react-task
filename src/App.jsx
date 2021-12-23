@@ -13,26 +13,29 @@ import SignIn from './pages/signIn/SignIn';
 function App() {
     const location = useLocation();
     const navigate = useNavigate();
-    const [access, setAccess] = useState(false);
-    store.subscribe(() => setAccess(store.getState().userInfo.access));
+    const [hasAccess, setHasAccess] = useState(false);
+    store.subscribe(() => setHasAccess(store.getState().userInfo.access));
     useEffect(() => {
-        setAccess(store.getState().userInfo.access);
+        setHasAccess(store.getState().userInfo.access);
         navigate(location.pathname);
     }, []);
     return (
         <div className="app">
-            <Header />
+            <Header logAccess={hasAccess} />
             <Routes>
-                <Route path="/signUp" element={access ? <Navigate to="/notes" /> : <SignUp />} />
-                <Route path="/notes" element={access ? <Notes /> : <Navigate to="/not-found" />} />
-                <Route path="/signIn" element={access ? <Navigate to="/notes" /> : <SignIn />} />
+                <Route path="/signUp" element={hasAccess ? <Navigate to="/notes" /> : <SignUp />} />
+                <Route
+                    path="/notes"
+                    element={hasAccess ? <Notes /> : <Navigate to="/not-found" />}
+                />
+                <Route path="/signIn" element={hasAccess ? <Navigate to="/notes" /> : <SignIn />} />
                 <Route
                     path="/shared-notes"
-                    element={access ? <SharedNotes /> : <Navigate to="/not-found" />}
+                    element={hasAccess ? <SharedNotes /> : <Navigate to="/not-found" />}
                 />
                 <Route
                     path="/"
-                    element={access ? <Navigate to="/notes" /> : <Navigate to="/signIn" />}
+                    element={hasAccess ? <Navigate to="/notes" /> : <Navigate to="/signIn" />}
                 />
                 <Route path="/about" element={<About />} />
                 <Route path="/not-found" element={<NotFound />} />

@@ -19,6 +19,7 @@ export const Logo = styled('h1')({
 });
 
 export const StyledLink = styled(NavLink)({
+    textTransform: 'uppercase',
     textDecoration: 'none',
     fontSize: '24px',
     color: 'white',

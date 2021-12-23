@@ -3,10 +3,10 @@ import { Formik } from 'formik';
 import React from 'react';
 import { useMutation } from 'react-query';
 import { useDispatch } from 'react-redux';
-import * as Yup from 'yup';
 
 import { serverPath } from '../../constants/noteList';
 import { getUserInfo } from '../../redux/actions/actionCreators';
+import { initValuesForSignUp, ValidSchemeForSignUp } from './validation';
 import {
     SignForm,
     ValidContainer,
@@ -18,16 +18,6 @@ import {
     StyledTitle,
 } from './styled';
 
-const ValidScheme = Yup.object().shape({
-    email: Yup.string().email('Please use @ and . for adding email').required('Please enter Email'),
-    password: Yup.string()
-        .min(3, 'password must contain at least 3 symblos')
-        .required('Please enter password'),
-    firstName: Yup.string().required('Please enter your name'),
-    lastName: Yup.string().required('Enter your last name'),
-    dateOfBirth: Yup.string().required('Please pick date of birth'),
-    confirmPassword: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match '),
-});
 const SignUp = () => {
     const dispatch = useDispatch();
     const mutation = useMutation((dataToPost) => {
@@ -37,15 +27,8 @@ const SignUp = () => {
 
     return (
         <Formik
-            initialValues={{
-                email: '',
-                password: '',
-                lastName: '',
-                firstName: '',
-                dateOfBirth: '',
-                confirmPassword: '',
-            }}
-            validationSchema={ValidScheme}
+            initialValues={initValuesForSignUp}
+            validationSchema={ValidSchemeForSignUp}
             onSubmit={async (values) => {
                 const dataToSend = {
                     firstName: values.firstName,
