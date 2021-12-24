@@ -2,7 +2,7 @@ import { useQuery } from 'react-query';
 import { fetchUsers } from '../../services/userService';
 
 const FETCH_USERS = 'FETCH_USERS';
-export const useQueryToLogin = (config = { enabled: false }) => {
+export const useQueryToLogin = (config = {}) => {
     const response = useQuery(
         FETCH_USERS,
         async () => {
