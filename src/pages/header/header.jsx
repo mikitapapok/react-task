@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { PropTypes } from 'prop-types';
+
 import {
     HeaderList,
     HeaderListItem,
@@ -32,14 +33,14 @@ const Header = ({ logAccess }) => {
                     <StyledLink to="/shared-notes">shared notes</StyledLink>
                 </HeaderListItem>
                 <HeaderListItem>
-                    <StyledLink to="/about">about</StyledLink>                    
+                    <StyledLink to="/about">about</StyledLink>
                 </HeaderListItem>
             </HeaderList>
             {logAccess && (
-                        <LogOutLink to="/" onClick={logOutHandler}>
-                            log out
-                        </LogOutLink>
-                    )}
+                <LogOutLink to="/" onClick={logOutHandler}>
+                    log out
+                </LogOutLink>
+            )}
         </StyledHeader>
     );
 };

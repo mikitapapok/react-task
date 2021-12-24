@@ -23,6 +23,14 @@ export const ErrorText = styled('p')({
 
 export const ErrorBack = styled(StyledLink)({
     color: 'cornflowerblue',
-    fontSize: '48px',
+    borderRadius: '100%',
+    flexShrink: '0',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: '30px',
+    background: '#F8F8FF',
+    fontSize: '100px',
+    border: '1px solid cornflowerblue',
     marginTop: '40px',
 });

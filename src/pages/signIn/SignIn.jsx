@@ -15,32 +15,30 @@ const SignIn = () => {
     const [userCredentials, setUserCredentials] = useState({});
     const dispatch = useDispatch();
 
-    const { data } = useQueryToLogin('currentUser', () => fetchUsers(), {
-        enabled: !!userCredentials,
+    const { data: users } = useQueryToLogin('currentUser', () => fetchUsers(), {
+        enabled: userCredentials.length,
     });
 
     const singInHandler = ({ email, password }) => {
-        const currentUser = data.data.find(
+        const currentUser = users.find(
             (dataElement) => dataElement.email == email && dataElement.password == password
         );
         if (currentUser) {
             dispatch(getUserInfo(currentUser));
-            return true;
         }
         setUserCredentials({});
-        return false;
+        return !!currentUser;
     };
 
     return (
         <Formik
             initialValues={initValuesForLogIn}
             validationSchema={ValidSchemeForLogIn}
-            onSubmit={(values, actions) => {
+            onSubmit={(values) => {
                 setUserCredentials({ email: values.email, password: values.password });
                 const isCredentialsCorrect = singInHandler(values);
                 if (!isCredentialsCorrect) {
                     alert('wrong email or password. Try again or sign up');
-                    actions.resetForm();
                 }
             }}
         >

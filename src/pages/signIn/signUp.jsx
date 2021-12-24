@@ -13,9 +13,9 @@ const SignUp = () => {
 
     const mutation = useMutationDataServer();
 
-    const loadDataToServer = (dataToSend) => {
-        dispatch(getUserInfo(dataToSend));
-        mutation.mutate(dataToSend);
+    const loadDataToServer = (userCredentials) => {
+        dispatch(getUserInfo(userCredentials));
+        mutation.mutate(userCredentials);
     };
 
     return (
@@ -23,14 +23,7 @@ const SignUp = () => {
             initialValues={initValuesForSignUp}
             validationSchema={ValidSchemeForSignUp}
             onSubmit={async (values) => {
-                const dataToSend = {
-                    firstName: values.firstName,
-                    lastName: values.lastName,
-                    dateOfBirth: values.dateOfBirth,
-                    password: values.password,
-                    email: values.email,
-                };
-                loadDataToServer(dataToSend);
+                loadDataToServer(values);
             }}
         >
             {({ errors }) => (

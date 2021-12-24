@@ -9,7 +9,7 @@ const NotFound = () => {
             <Tittle>404</Tittle>
             <ErrorText>Page not found. Please enter correct Url</ErrorText>
             <img src={notFound} alt="not-found" />
-            <ErrorBack to="/">← back to main page</ErrorBack>
+            <ErrorBack to="/">←</ErrorBack>
         </ErrorBox>
     );
 };
