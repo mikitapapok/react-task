@@ -1,10 +1,10 @@
 import { useQuery } from 'react-query';
 import { fetchUsers } from '../../services/userService';
 
-const LOGIN_USER = 'LOGIN_USER';
+const USER_DATA = 'USER_DATA';
 export const useQueryToLogin = (config) => {
     const response = useQuery(
-        LOGIN_USER,
+        USER_DATA,
         async () => {
             const response = await fetchUsers();
             return response?.data;

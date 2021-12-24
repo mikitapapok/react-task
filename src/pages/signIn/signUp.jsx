@@ -13,18 +13,16 @@ const SignUp = () => {
 
     const mutation = useMutationDataServer();
 
-    const loadDataToServer = (userCredentials) => {
+    const submitForm = async (userCredentials) => {
         dispatch(getUserInfo(userCredentials));
-        mutation.mutate(userCredentials);
+        await mutation.mutate(userCredentials);
     };
 
     return (
         <Formik
             initialValues={initValuesForSignUp}
             validationSchema={ValidSchemeForSignUp}
-            onSubmit={async (values) => {
-                loadDataToServer(values);
-            }}
+            onSubmit={submitForm}
         >
             {({ errors }) => (
                 <SignForm>

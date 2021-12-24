@@ -8,14 +8,13 @@ import { RegularText, SignForm, SignInButton, StyledLink, StyledTitle, SignInFor
 import { getUserInfo } from '../../redux/actions/actionCreators';
 import { initValuesForLogIn, ValidSchemeForLogIn } from './validation';
 import { useQueryToLogin } from '../../hooks/query/loginQuery';
-import { fetchUsers } from '../../services/userService';
 import ValidInput from './validInput';
 
 const SignIn = () => {
     const [userCredentials, setUserCredentials] = useState({});
     const dispatch = useDispatch();
 
-    const { data: users } = useQueryToLogin('currentUser', () => fetchUsers(), {
+    const { data: users } = useQueryToLogin({
         enabled: userCredentials.length,
     });
 
