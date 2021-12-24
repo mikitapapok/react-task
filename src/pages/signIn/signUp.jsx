@@ -13,9 +13,9 @@ const SignUp = () => {
 
     const mutation = useMutationDataServer();
 
-    const submitForm = async (userCredentials) => {
-        dispatch(getUserInfo(userCredentials));
-        await mutation.mutate(userCredentials);
+    const submitForm = async (values) => {
+        dispatch(getUserInfo(values));
+        await mutation.mutate(values);
     };
 
     return (

@@ -9,14 +9,15 @@ import SignUp from './pages/signIn/signUp';
 import About from './pages/about/About';
 import NotFound from './pages/notFound/notFound';
 import SignIn from './pages/signIn/SignIn';
+import { getAccess } from './selectors/selectors';
 
 function App() {
     const location = useLocation();
     const navigate = useNavigate();
     const [hasAccess, setHasAccess] = useState(false);
-    store.subscribe(() => setHasAccess(store.getState().userInfo.access));
+    store.subscribe(() => setHasAccess(getAccess));
     useEffect(() => {
-        setHasAccess(store.getState().userInfo.access);
+        setHasAccess(getAccess);
         navigate(location.pathname);
     }, []);
     return (
