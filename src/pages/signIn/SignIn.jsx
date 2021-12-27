@@ -7,14 +7,14 @@ import { RegularText, SignForm, SignInButton, StyledLink, StyledTitle, SignInFor
 
 import { getUserInfo } from '../../redux/actions/actionCreators';
 import { initValuesForLogIn, ValidSchemeForLogIn } from './validation';
-import { useQueryToLogin } from '../../hooks/query/loginQuery';
+import { useUsers } from '../../hooks/query/loginQuery';
 import ValidInput from './validInput';
 
 const SignIn = () => {
     const [userCredentials, setUserCredentials] = useState({});
     const dispatch = useDispatch();
 
-    const { data: users } = useQueryToLogin({
+    const { data: users } = useUsers({
         enabled: userCredentials.length,
     });
 
