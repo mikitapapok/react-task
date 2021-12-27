@@ -77,3 +77,5 @@ export const todoList = [
         isShared: false,
     },
 ];
+
+export const serverPath = 'https://powerful-bastion-72531.herokuapp.com';

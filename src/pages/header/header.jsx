@@ -1,4 +1,6 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import { PropTypes } from 'prop-types';
 
 import {
     HeaderList,
@@ -7,34 +9,44 @@ import {
     StyledLink,
     StyledLogoLink,
     Logo,
+    LogOutLink,
 } from './styled';
+import { logOut } from '../../redux/actions/actionCreators';
 
-const Header = () => {
+const Header = ({ logAccess }) => {
+    const dispatch = useDispatch();
+    const logOutHandler = () => {
+        dispatch(logOut());
+    };
+
     return (
         <StyledHeader>
             <Logo>
-                <StyledLogoLink to={'/notes'}>REACT TASK</StyledLogoLink>
+                <StyledLogoLink to={'/'}>REACT TASK</StyledLogoLink>
             </Logo>
 
             <HeaderList>
                 <HeaderListItem>
-                    <StyledLink exact to={'/notes'}>
-                        My notes
-                    </StyledLink>
+                    <StyledLink to={'/notes'}>my notes</StyledLink>
                 </HeaderListItem>
                 <HeaderListItem>
-                    <StyledLink exact to="/shared-notes">
-                        Shared Notes
-                    </StyledLink>
+                    <StyledLink to="/shared-notes">shared notes</StyledLink>
                 </HeaderListItem>
                 <HeaderListItem>
-                    <StyledLink exact to="/about">
-                        About
-                    </StyledLink>
+                    <StyledLink to="/about">about</StyledLink>
                 </HeaderListItem>
             </HeaderList>
+            {logAccess && (
+                <LogOutLink to="/" onClick={logOutHandler}>
+                    log out
+                </LogOutLink>
+            )}
         </StyledHeader>
     );
+};
+
+Header.propTypes = {
+    logAccess: PropTypes.bool,
 };
 
 export default Header;

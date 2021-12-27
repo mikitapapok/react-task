@@ -2,6 +2,7 @@ import { styled } from '@mui/styles';
 import Box from '@mui/material/Box';
 import { Button, ListItem } from '@mui/material';
 import List from '@mui/material/List';
+import { TextField } from '@mui/material';
 
 export const Container = styled(Box)({
     width: '100%',
@@ -98,4 +99,12 @@ export const StyledInput = styled('input')({
     padding: '5px',
     borderRadius: '5px',
     border: '2px solid grey',
+});
+
+export const StyledField = styled(TextField)({
+    padding: '5px',
+    width: '100%',
+    borderRadius: '5px',
+    border: '1px solid grey',
+    marginTop: '5px',
 });

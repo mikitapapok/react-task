@@ -10,13 +10,13 @@ import { useLocalStorage } from '../../hooks/useLocaleStorage';
 import {
     Backdrop,
     ChangeDescription,
-    StyledInput,
     Container,
     EditButton,
     ModalWindow,
     NotesList,
     StyledList,
     StyledListComponent,
+    StyledField,
 } from './styled';
 import PropTypes from 'prop-types';
 
@@ -41,7 +41,9 @@ const Notes = ({ condition }) => {
                 ? { ...todo, description: changeDescriptionInputValue }
                 : todo;
         });
+        const currentElement = changedTodoList.find((todo) => todo.id === element.id);
         setTodosFromLocalStorage(changedTodoList);
+        setComponentInfo(currentElement);
         closeModal();
     };
 
@@ -103,10 +105,11 @@ const Notes = ({ condition }) => {
                     <ModalWindow>
                         <h2>Change Item Description</h2>
                         <ChangeDescription>
-                            <StyledInput
+                            <StyledField
                                 type="text"
                                 onChange={setDescription}
                                 value={changeDescriptionInputValue}
+                                label="change value"
                             />
                             <EditButton onClick={() => submitFormChanges(componentInfo)}>
                                 Change

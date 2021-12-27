@@ -1,8 +1,11 @@
 import { styled } from '@mui/styles';
+import { StyledLink } from '../header/styled';
 
 export const ErrorBox = styled('div')({
-    background: 'none',
+    background: 'white',
+    padding: '20px',
     display: 'flex',
+    borderRadius: '5px',
     flexDirection: 'column',
     alignItems: 'center',
     marginTop: '50px',
@@ -10,10 +13,24 @@ export const ErrorBox = styled('div')({
 
 export const Tittle = styled('h2')({
     fontSize: '72px',
-    color: 'darkred',
+    color: 'darkgrey',
 });
 
 export const ErrorText = styled('p')({
     fontSize: '56px',
-    color: 'darkred',
+    color: 'darkgrey',
+});
+
+export const ErrorBack = styled(StyledLink)({
+    color: 'cornflowerblue',
+    borderRadius: '100%',
+    flexShrink: '0',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: '10px 20px',
+    background: '#F8F8FF',
+    fontSize: '100px',
+    border: '1px solid cornflowerblue',
+    marginTop: '40px',
 });
