@@ -28,7 +28,7 @@ export const ErrorBack = styled(StyledLink)({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    padding: '30px',
+    padding: '10px 20px',
     background: '#F8F8FF',
     fontSize: '100px',
     border: '1px solid cornflowerblue',
