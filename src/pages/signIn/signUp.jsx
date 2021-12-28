@@ -3,7 +3,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 
 import { getUserInfo } from '../../redux/actions/actionCreators';
-import { initValuesForSignUp, ValidSchemeForSignUp } from './validation';
+import { initValuesForSignUp, ValidSchemeForSignUp } from '../../constants/validation';
 import { SignUpForm, SignForm, SignInButton, StyledLink, StyledTitle } from './styled';
 import ValidInput from './validInput';
 import { useMutationDataServer } from '../../hooks/mutation/dataServerMutation';

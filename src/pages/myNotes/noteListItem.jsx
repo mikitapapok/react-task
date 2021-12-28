@@ -2,8 +2,11 @@ import React from 'react';
 
 import PropTypes from 'prop-types';
 
-import { StyledSpan, EditButton } from './styled';
-
+import { StyledSpan, EditButton, ShareButton, NoteListContainer } from './styled';
+import shareIcon from '../../images/iconmonstr-share-9.svg';
+import { useDispatch, useSelector } from 'react-redux';
+import { getState } from '../../selectors/selectors';
+import { shareTodo } from '../../redux/actions/actionCreators';
 const NoteListItem = ({
     getItemInfo,
     id,
@@ -13,16 +16,25 @@ const NoteListItem = ({
     showId,
     openModal,
     changePickedItem,
+    condition,
 }) => {
+    const todoList = useSelector(getState).todos;
+    const dispatch = useDispatch();
+    const submitTodo = () => {
+        const currentTodo = todoList.find((todo) => todo.id === id);
+        dispatch(shareTodo(currentTodo));
+        alert('Todo is shared');
+    };
     const formatDescription =
         description.length > 20 ? `${description.slice(0, 20).trim()}...` : `${description}`;
+
     return (
-        <div onClick={getItemInfo} id={id} onDoubleClick={changePickedItem}>
+        <NoteListContainer onClick={getItemInfo} id={id} onDoubleClick={changePickedItem}>
             <h2>{title}</h2>
             {showId && (
                 <p>
                     <StyledSpan>Id: </StyledSpan>
-                    {id}
+                    {id.slice(0, 2)}
                 </p>
             )}
             <p>
@@ -34,12 +46,17 @@ const NoteListItem = ({
                 {date}
             </p>
             {showId && <EditButton onClick={openModal}>Edit</EditButton>}
-        </div>
+            {!condition && !showId && (
+                <ShareButton onClick={submitTodo}>
+                    <img src={shareIcon} alt="" />
+                </ShareButton>
+            )}
+        </NoteListContainer>
     );
 };
 
 NoteListItem.propTypes = {
-    id: PropTypes.number,
+    id: PropTypes.string,
     title: PropTypes.string,
     description: PropTypes.string,
     date: PropTypes.string,
@@ -47,6 +64,7 @@ NoteListItem.propTypes = {
     showId: PropTypes.bool,
     openModal: PropTypes.func,
     changePickedItem: PropTypes.func,
+    condition: PropTypes.bool,
 };
 
 export default NoteListItem;

@@ -15,7 +15,10 @@ export const ValidSchemeForLogIn = Yup.object().shape({
     email: Yup.string().email('Please use @ and . for adding email').required('Enter Email'),
     password: Yup.string().min(3, 'Enter more than 3 symblos').required('Enter password'),
 });
-
+export const ValidationSchemeForCreate = Yup.object().shape({
+    title: Yup.string().required('Enter title'),
+    description: Yup.string().required('Enter description'),
+});
 export const initValuesForLogIn = {
     email: '',
     password: '',
@@ -28,4 +31,9 @@ export const initValuesForSignUp = {
     firstName: '',
     dateOfBirth: '',
     confirmPassword: '',
+};
+export const sortValidation = (payload) => {
+    return {
+        search: payload,
+    };
 };
