@@ -33,9 +33,9 @@ export const StyledListComponent = styled(ListItem)((props) => ({
     cursor: 'pointer',
     background: `${props.isActive ? 'slategrey' : 'white'}`,
     color: `${props.isActive ? 'white' : 'black'}`,
-    transition: 'transform 0.2s',
+
     '&:hover': {
-        transform: 'scale(1.1) ',
+        background: 'antiquewhite',
         border: 'none',
     },
     '&:active': {
@@ -97,13 +97,6 @@ export const ChangeDescription = styled('div')({
     marginTop: '20px',
 });
 
-export const StyledInput = styled('input')({
-    width: '300px',
-    padding: '5px',
-    borderRadius: '5px',
-    borderBottom: '2px solid grey',
-    backgroundImage: `url(${search})`,
-});
 
 export const StyledField = styled(TextField)({
     padding: '5px',

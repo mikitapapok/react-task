@@ -38,6 +38,24 @@ const Notes = ({ condition }) => {
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [created, setCreated] = useState(false);
     const [changeDescriptionInputValue, setChangeDescriptionInputValue] = useState('');
+    const [currentTodo, setCurrentTodo] = useState(null);
+    const dragStartTodo = (card) => {
+        setCurrentTodo(card);
+    };
+    const dropHandler = (e, card) => {
+        e.preventDefault();
+        setTodos(
+            todos.map((element) => {
+                if (element.id === card.id) {
+                    return { ...element, id: currentTodo.id };
+                }
+                if (element.id === currentTodo.id) {
+                    return { ...element, id: card.id };
+                }
+                return element;
+            })
+        );
+    };
 
     const getSortList = (list) => {
         return list.filter((todo) =>
@@ -105,6 +123,13 @@ const Notes = ({ condition }) => {
         setComponentInfo(getCurrentItem);
         setChangeDescriptionInputValue(getCurrentItem.description);
     };
+    const sortTodos = (prevTodo, nextTodo) => {
+        if (prevTodo.id > nextTodo.id) {
+            return 1;
+        } else {
+            return -1;
+        }
+    };
 
     return (
         <NotesContainer>
@@ -120,12 +145,17 @@ const Notes = ({ condition }) => {
                 <Container>
                     <StyledList>
                         {todos.length ? (
-                            todos.map((todo) => (
+                            todos.sort(sortTodos).map((todo) => (
                                 <StyledListComponent
                                     isActive={componentInfo?.id === todo.id}
                                     key={todo.id}
                                 >
                                     <ListItemText
+                                        draggable={true}
+                                        key={todo.id}
+                                        onDragOver={(e) => e.preventDefault()}
+                                        onDragStart={() => dragStartTodo(todo)}
+                                        onDrop={(e) => dropHandler(e, todo)}
                                         primary={
                                             <NoteListItem
                                                 id={todo.id}
