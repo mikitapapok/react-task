@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { ListItemText } from '@mui/material';
 import { ModalUnstyled } from '@mui/material';
@@ -17,9 +19,9 @@ import {
     StyledField,
     NotesContainer,
     NotFoundText,
+    LoadingButton,
 } from './styled';
-import PropTypes from 'prop-types';
-import { useDispatch, useSelector } from 'react-redux';
+
 import { addTodo, changeTodo } from '../../redux/actions/actionCreators';
 import { getState, getTodos } from '../../selectors/selectors';
 import SortForm from './sortForm';
@@ -39,6 +41,8 @@ const Notes = ({ condition }) => {
     const [created, setCreated] = useState(false);
     const [changeDescriptionInputValue, setChangeDescriptionInputValue] = useState('');
     const [currentTodo, setCurrentTodo] = useState(null);
+    const [loadingInfiniyScroll, setLoadingInfinityScroll] = useState(false);
+
     const dragStartTodo = (card) => {
         setCurrentTodo(card);
     };
@@ -68,6 +72,11 @@ const Notes = ({ condition }) => {
         );
     };
 
+    const loadDataOnScroll = () => {
+        setLoadingInfinityScroll(!loadingInfiniyScroll);
+        setTodos((prev) => (condition ? [...prev, ...sharedTodos] : [...prev, ...todoList]));
+    };
+
     useEffect(() => {
         const sortedTodo = getSortList(todoList);
         const sortedSharedTodo = getSortList(sharedTodos);
@@ -77,26 +86,32 @@ const Notes = ({ condition }) => {
     const setDescription = (element) => {
         setChangeDescriptionInputValue(element.target.value);
     };
+
     const pickDatesToSort = (payload) => {
         setDateValue(payload);
     };
+
     const resetOption = () => {
         setSearchInputValue('');
         setDateValue([new Date('2000'), new Date('2030')]);
     };
+
     const getSearchValue = (e) => {
         setSearchInputValue(e.target.value);
     };
+
     const createTodo = (todo) => {
         dispatch(addTodo(todo));
         setCreated(!created);
     };
+
     const submitFormChanges = (element) => {
         const changedTodoList = todos.map((todo) => {
             return todo.id === element.id
                 ? { ...todo, description: changeDescriptionInputValue }
                 : todo;
         });
+
         const currentElement = changedTodoList.find((todo) => todo.id === element.id);
 
         setComponentInfo(currentElement);
@@ -174,6 +189,7 @@ const Notes = ({ condition }) => {
                         ) : (
                             <NotFoundText>nothing found</NotFoundText>
                         )}
+                        <LoadingButton onClick={loadDataOnScroll}>load more data</LoadingButton>
                     </StyledList>
                 </Container>
                 <ComponentInfo componentInfo={componentInfo} openModal={openModal} />

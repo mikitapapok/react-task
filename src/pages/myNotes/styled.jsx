@@ -97,7 +97,6 @@ export const ChangeDescription = styled('div')({
     marginTop: '20px',
 });
 
-
 export const StyledField = styled(TextField)({
     padding: '5px',
     width: '100%',
@@ -188,4 +187,13 @@ export const StyledCreateForm = styled(Form)({
 export const CreateTodoText = styled('h3')({
     fontSize: '30px',
     textTransform: 'uppercase',
+});
+
+export const LoadingButton = styled(SearchButton)({
+    width: '100%',
+    height: '100%',
+    '&.MuiButton-root': {
+        marginTop: '0',
+        borderRadius: '0 0 5px 5px',
+    },
 });
