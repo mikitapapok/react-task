@@ -11,7 +11,7 @@ export const ErrorBox = styled('div')({
     marginTop: '50px',
 });
 
-export const Tittle = styled('h2')({
+export const Title = styled('h2')({
     fontSize: '72px',
     color: 'darkgrey',
 });
