@@ -19,8 +19,10 @@ const NewTodoForm = ({ createTodo }) => {
                 description: '',
             }}
             validationSchema={ValidationSchemeForCreate}
-            onSubmit={(values) => {
+            onSubmit={(values, actions) => {
                 createTodo(values);
+                alert('New todo created');
+                actions.resetForm();
             }}
         >
             {({ errors }) => (

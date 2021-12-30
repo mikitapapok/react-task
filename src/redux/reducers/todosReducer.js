@@ -1,5 +1,5 @@
 import { v4 as uuid } from 'uuid';
-import { ADD_TODO, CHANGE_TODO, SHARE_TODO } from '../actions/actionTypes';
+import { ADD_TODO, CHANGE_TODO, SHARE_TODO, SET_NEW_TODOS } from '../actions/actionTypes';
 
 const storage = window.localStorage;
 const initState = JSON.parse(storage.getItem('todoList')) || {
@@ -103,6 +103,16 @@ export const todoReducer = (state = initState, action) => {
             state.todos = [...state.todos, currentTodo];
             storage.setItem('todoList', JSON.stringify(state));
             break;
+        case SET_NEW_TODOS:
+            if (!action.payload.condition) {
+                state.todos = action.payload.todos;
+            }
+            if (action.payload.condition) {
+                state.sharedTodos = action.payload.todos;
+            }
+            storage.setItem('todoList', JSON.stringify(state));
+            break;
+
         default:
             return state;
     }

@@ -22,7 +22,7 @@ import {
     LoadingButton,
 } from './styled';
 
-import { addTodo, changeTodo } from '../../redux/actions/actionCreators';
+import { addTodo, changeTodo, setNewTodos } from '../../redux/actions/actionCreators';
 import { getState, getTodos } from '../../selectors/selectors';
 import SortForm from './sortForm';
 import NewTodoForm from './newTodoForm';
@@ -41,7 +41,8 @@ const Notes = ({ condition }) => {
     const [created, setCreated] = useState(false);
     const [changeDescriptionInputValue, setChangeDescriptionInputValue] = useState('');
     const [currentTodo, setCurrentTodo] = useState(null);
-    const [loadingInfiniyScroll, setLoadingInfinityScroll] = useState(false);
+    const [loadingInfiniyScroll, setLoadingInfinityScroll] = useState(true);
+    const [loadMoreData, setLoadMoreData] = useState(2);
 
     const dragStartTodo = (card) => {
         setCurrentTodo(card);
@@ -56,6 +57,7 @@ const Notes = ({ condition }) => {
                 if (element.id === currentTodo.id) {
                     return { ...element, id: card.id };
                 }
+
                 return element;
             })
         );
@@ -73,15 +75,21 @@ const Notes = ({ condition }) => {
     };
 
     const loadDataOnScroll = () => {
-        setLoadingInfinityScroll(!loadingInfiniyScroll);
-        setTodos((prev) => (condition ? [...prev, ...sharedTodos] : [...prev, ...todoList]));
+        setLoadMoreData((prev) => prev + 3);
     };
 
     useEffect(() => {
         const sortedTodo = getSortList(todoList);
         const sortedSharedTodo = getSortList(sharedTodos);
+
         setTodos(!condition ? sortedTodo : sortedSharedTodo);
-    }, [storeState, dateValue, searchInputValues, created]);
+        if (!condition && loadMoreData >= todoList.length) {
+            setLoadingInfinityScroll(false);
+        }
+        if (condition && loadMoreData >= sharedTodos.length) {
+            setLoadingInfinityScroll(false);
+        }
+    }, [storeState, dateValue, searchInputValues, created, loadMoreData]);
 
     const setDescription = (element) => {
         setChangeDescriptionInputValue(element.target.value);
@@ -136,6 +144,7 @@ const Notes = ({ condition }) => {
             return todo.id == e.currentTarget.id;
         });
         setComponentInfo(getCurrentItem);
+        dispatch(setNewTodos({ todos: todos, condition: condition }));
         setChangeDescriptionInputValue(getCurrentItem.description);
     };
     const sortTodos = (prevTodo, nextTodo) => {
@@ -160,36 +169,41 @@ const Notes = ({ condition }) => {
                 <Container>
                     <StyledList>
                         {todos.length ? (
-                            todos.sort(sortTodos).map((todo) => (
-                                <StyledListComponent
-                                    isActive={componentInfo?.id === todo.id}
-                                    key={todo.id}
-                                >
-                                    <ListItemText
-                                        draggable={true}
+                            todos
+                                .sort(sortTodos)
+                                .slice(0, loadMoreData)
+                                .map((todo) => (
+                                    <StyledListComponent
+                                        isActive={componentInfo?.id === todo.id}
                                         key={todo.id}
-                                        onDragOver={(e) => e.preventDefault()}
-                                        onDragStart={() => dragStartTodo(todo)}
-                                        onDrop={(e) => dropHandler(e, todo)}
-                                        primary={
-                                            <NoteListItem
-                                                id={todo.id}
-                                                title={todo.title}
-                                                showId={false}
-                                                description={todo.description}
-                                                date={todo.date}
-                                                getItemInfo={getItemInfo}
-                                                changePickedItem={changePickedItem}
-                                                condition={condition}
-                                            />
-                                        }
-                                    />
-                                </StyledListComponent>
-                            ))
+                                    >
+                                        <ListItemText
+                                            draggable={true}
+                                            key={todo.id}
+                                            onDragOver={(e) => e.preventDefault()}
+                                            onDragStart={() => dragStartTodo(todo)}
+                                            onDrop={(e) => dropHandler(e, todo)}
+                                            primary={
+                                                <NoteListItem
+                                                    id={todo.id}
+                                                    title={todo.title}
+                                                    showId={false}
+                                                    description={todo.description}
+                                                    date={todo.date}
+                                                    getItemInfo={getItemInfo}
+                                                    changePickedItem={changePickedItem}
+                                                    condition={condition}
+                                                />
+                                            }
+                                        />
+                                    </StyledListComponent>
+                                ))
                         ) : (
                             <NotFoundText>nothing found</NotFoundText>
                         )}
-                        <LoadingButton onClick={loadDataOnScroll}>load more data</LoadingButton>
+                        {loadingInfiniyScroll && (
+                            <LoadingButton onClick={loadDataOnScroll}>load more data</LoadingButton>
+                        )}
                     </StyledList>
                 </Container>
                 <ComponentInfo componentInfo={componentInfo} openModal={openModal} />
