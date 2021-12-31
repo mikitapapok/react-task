@@ -48,7 +48,9 @@
         "test": "react-scripts test",
         "eject": "react-scripts eject"
     },
-    "pre-commit": "test"
+    "pre-commit": {
+        "run":"test"
+    }
     ,
     "eslintConfig": {
         "extends": [
