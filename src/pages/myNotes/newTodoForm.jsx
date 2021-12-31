@@ -24,6 +24,7 @@ const NewTodoForm = ({ createTodo }) => {
                 alert('New todo created');
                 actions.resetForm();
             }}
+            data-form="1"
         >
             {({ errors }) => (
                 <StyledCreateForm>
@@ -40,7 +41,9 @@ const NewTodoForm = ({ createTodo }) => {
                         label={errors.description || 'Enter description'}
                         error={!!errors.description}
                     />
-                    <SearchButton type="submit">create</SearchButton>
+                    <SearchButton type="submit" data-button="1">
+                        create
+                    </SearchButton>
                 </StyledCreateForm>
             )}
         </Formik>

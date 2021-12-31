@@ -1,5 +1,6 @@
 import { configure, mount } from 'enzyme';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
+import '@testing-library/jest-dom/extend-expect';
 import { Provider } from 'react-redux';
 
 import { store } from '../../../redux/store';
@@ -18,7 +19,6 @@ const props = {
     changePickedItem: jest.fn(),
     condition: true,
 };
-const noProps = {};
 
 describe('NoteListItem component test', () => {
     const component = mount(
@@ -27,7 +27,6 @@ describe('NoteListItem component test', () => {
         </Provider>
     );
     const wrapper = component.find("[data-container='1']");
-
     it('render component with props', () => {
         expect(wrapper).toHaveLength(2);
     });

@@ -3,7 +3,6 @@ import Adapter from 'enzyme-adapter-react-16';
 
 import NotFound from '../notFound';
 
-
 configure({ adapter: new Adapter() });
 
 describe('notFOund page tests', () => {
@@ -12,6 +11,4 @@ describe('notFOund page tests', () => {
         const wrapper = component.find("[data-id='1']");
         expect(wrapper.length).toBe(1);
     });
-
-
 });
