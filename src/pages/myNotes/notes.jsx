@@ -89,7 +89,6 @@ const Notes = ({ condition }) => {
         if (condition && loadMoreData >= sharedTodos.length) {
             setLoadingInfinityScroll(false);
         }
-        
     }, [storeState, dateValue, searchInputValues, created, loadMoreData]);
 
     const setDescription = (element) => {
@@ -202,7 +201,7 @@ const Notes = ({ condition }) => {
                         ) : (
                             <NotFoundText>nothing found</NotFoundText>
                         )}
-                        {loadingInfiniyScroll  && (
+                        {loadingInfiniyScroll && (
                             <LoadingButton onClick={loadDataOnScroll}>load more data</LoadingButton>
                         )}
                     </StyledList>
