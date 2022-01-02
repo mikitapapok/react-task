@@ -70,10 +70,5 @@
         "@wojtekmaj/enzyme-adapter-react-17": "^0.6.6",
         "husky": "^7.0.4",
         "prettier": "2.5.1"
-    },
-    "husky": {
-        "hooks": {
-            "pre-commit": "npm test "
-        }
     }
 }
