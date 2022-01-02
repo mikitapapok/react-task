@@ -22,9 +22,5 @@ describe('Notes component test', () => {
         expect(wrapper.text()).toBe('Enter title');
     });
 
-    it('component is rendered with truthly props', () => {
-        const component = renderComponent(true);
-        const newTodoFormItem = component.find("[data-description='1']");
-        expect(newTodoFormItem).toHaveLength(0);
-    });
+
 });
