@@ -71,10 +71,13 @@
     "eslint-plugin-json": "^3.1.0",
     "husky": "^7.0.4",
     "lint-staged": "^12.1.5",
-    "prettier": "2.5.1"
+    "prettier": "^2.5.1"
   },
   "lint-staged": {
-    "*": "eslint"
+    "*": [
+      "eslint",
+      "prettier"
+    ]
   },
   "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
   "main": ".eslintrc.js",
