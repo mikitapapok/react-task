@@ -26,7 +26,7 @@ describe('NoteListItem component test', () => {
             <NoteListItem {...props} />
         </Provider>
     );
-    const wrapper = component.find("[data-container='1']");
+    const wrapper = component.find("[data-test-id='note-list-item']");
     it('render component with props', () => {
         expect(wrapper).toHaveLength(2);
     });

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import NoteListItem from './noteListItem';
 import { StyledComponentInfo } from './styled';
 
-const ComponentInfo = ({ componentInfo, openModal}) => {
+const ComponentInfo = ({ componentInfo, openModal }) => {
     const { id, title, description, date } = componentInfo;
 
     return (
@@ -17,7 +17,7 @@ const ComponentInfo = ({ componentInfo, openModal}) => {
                     date={date}
                     showId={true}
                     openModal={openModal}
-                    data-component='1'
+                    data-test-id="note-list-component"
                 />
             ) : (
                 <h1>Select note to display</h1>

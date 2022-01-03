@@ -29,7 +29,12 @@ const NoteListItem = ({
         description.length > 20 ? `${description.slice(0, 20).trim()}...` : `${description}`;
 
     return (
-        <NoteListContainer onClick={getItemInfo} id={id} onDoubleClick={changePickedItem} data-container='1'>
+        <NoteListContainer
+            onClick={getItemInfo}
+            id={id}
+            onDoubleClick={changePickedItem}
+            data-test-id="note-list-item"
+        >
             <h2>{title}</h2>
             {showId && (
                 <p>

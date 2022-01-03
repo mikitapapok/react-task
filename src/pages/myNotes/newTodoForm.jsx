@@ -24,7 +24,6 @@ const NewTodoForm = ({ createTodo }) => {
                 alert('New todo created');
                 actions.resetForm();
             }}
-            data-form="1"
         >
             {({ errors }) => (
                 <StyledCreateForm>
@@ -34,7 +33,7 @@ const NewTodoForm = ({ createTodo }) => {
                         name="title"
                         label={errors.description || 'Enter title'}
                         error={!!errors.title}
-                        data-description='1'
+                        data-test-id="submit-form-field"
                     />
                     <StyledFormField
                         as={StyledCreateField}

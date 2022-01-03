@@ -1,4 +1,4 @@
-import { shallow, configure} from 'enzyme';
+import { shallow, configure } from 'enzyme';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 
 import ComponentInfo from '../componentInfo';
@@ -20,7 +20,7 @@ describe('ComponentInfo component test', () => {
         const component = shallow(
             <ComponentInfo componentInfo={props.componentInfo} openModal={props.openModal} />
         );
-        const componentProp = component.find("[data-component='1']");
+        const componentProp = component.find("[data-test-id='note-list-component']");
 
         expect(componentProp).toHaveLength(1);
     });

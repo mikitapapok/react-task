@@ -17,10 +17,8 @@ describe('Notes component test', () => {
 
     it('component is rendered with falsly prop', () => {
         const component = renderComponent(false);
-        const newTodoFormItem = component.find("[data-description='1']");
+        const newTodoFormItem = component.find("[data-test-id='submit-form-field']");
         const wrapper = newTodoFormItem.find('span');
         expect(wrapper.text()).toBe('Enter title');
     });
-
-
 });
