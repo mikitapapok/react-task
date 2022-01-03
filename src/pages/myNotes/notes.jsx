@@ -151,9 +151,8 @@ const Notes = ({ condition }) => {
     const sortTodos = (prevTodo, nextTodo) => {
         if (prevTodo.id > nextTodo.id) {
             return 1;
-        } else {
-            return -1;
         }
+        return -1;
     };
 
     return (
