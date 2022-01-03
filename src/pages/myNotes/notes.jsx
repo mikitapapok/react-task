@@ -51,26 +51,43 @@ const Notes = ({ condition }) => {
         e.preventDefault();
         setTodos(
             todos.map((element) => {
+                let currentId = element.id;
                 if (element.id === card.id) {
-                    return { ...element, id: currentTodo.id };
+                    currentId = currentTodo.id;
                 }
                 if (element.id === currentTodo.id) {
-                    return { ...element, id: card.id };
+                    currentId = card.id;
                 }
-
-                return element;
+                return { ...element, id: currentId };
             })
         );
     };
 
+    const checkIfDataInRange = (payloadDate, payloadTitle) => {
+        const prevData = dateValue[0];
+        const nextData = dateValue[1];
+
+        return (
+            new Date(payloadDate) >= prevData &&
+            new Date(payloadDate) <= nextData &&
+            payloadTitle.toLowerCase().includes(searchInputValues.toLowerCase())
+        );
+    };
+
+    const checkIdDateNotInRange = (payloadDate, payloadTitle) => {
+        const prevDate = payloadDate[0];
+
+        return (
+            new Date(payloadDate) >= prevDate &&
+            payloadTitle.toLowerCase().includes(searchInputValues.toLowerCase())
+        );
+    };
     const getSortList = (list) => {
+        const targetDate = dateValue[1];
         return list.filter((todo) =>
-            dateValue[1]
-                ? new Date(todo.date) >= dateValue[0] &&
-                  new Date(todo.date) <= dateValue[1] &&
-                  todo.title.toLowerCase().includes(searchInputValues.toLowerCase())
-                : new Date(todo.date) >= dateValue[0] &&
-                  todo.title.toLowerCase().includes(searchInputValues.toLowerCase())
+            targetDate
+                ? checkIfDataInRange(todo.date, todo.title)
+                : checkIdDateNotInRange(todo.date, todo.title)
         );
     };
 
