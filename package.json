@@ -77,8 +77,7 @@
         "*": [
             "eslint --fix",
             "prettier --write"
-        ],
-        "*.test.jsx": "react-scripts test"
+        ]
     },
     "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
     "main": ".eslintrc.js",
