@@ -1,6 +1,6 @@
 import { v4 as uuid } from 'uuid';
 import { ADD_TODO, CHANGE_TODO, SHARE_TODO, SET_NEW_TODOS } from '../actions/actionTypes';
-import { sharedTodos, todos } from '../../constants/noteList';
+import { sharedTodos, todos } from '../../constants/constants';
 
 const storage = window.localStorage;
 const initState = JSON.parse(storage.getItem('todoList')) || {

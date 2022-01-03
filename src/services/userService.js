@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { serverPath } from '../constants/noteList';
+import { serverPath } from '../constants/constants';
 
 export const fetchUsers = () => {
     return axios.get(`${serverPath}/users`);

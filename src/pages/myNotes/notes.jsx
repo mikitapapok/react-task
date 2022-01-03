@@ -23,14 +23,19 @@ import {
 } from './styled';
 
 import { addTodo, changeTodo, setNewTodos } from '../../redux/actions/actionCreators';
-import { getState, getTodos } from '../../selectors/selectors';
+import { getSharedTodos, getTodoList, getTodos } from '../../selectors/selectors';
 import SortForm from './sortForm';
 import NewTodoForm from './newTodoForm';
+import {
+    checkIdDateNotInRange,
+    checkIfDataInRange,
+    getDragAndDropId,
+} from '../../constants/constants';
 
 const Notes = ({ condition }) => {
     const storeState = getTodos();
-    const todoList = useSelector(getState).todos;
-    const sharedTodos = useSelector(getState).sharedTodos;
+    const todoList = useSelector(getTodoList);
+    const sharedTodos = useSelector(getSharedTodos);
     const dispatch = useDispatch();
 
     const [todos, setTodos] = useState([]);
@@ -47,47 +52,24 @@ const Notes = ({ condition }) => {
     const dragStartTodo = (card) => {
         setCurrentTodo(card);
     };
+
     const dropHandler = (e, card) => {
         e.preventDefault();
-        setTodos(
-            todos.map((element) => {
-                let currentId = element.id;
-                if (element.id === card.id) {
-                    currentId = currentTodo.id;
-                }
-                if (element.id === currentTodo.id) {
-                    currentId = card.id;
-                }
-                return { ...element, id: currentId };
-            })
-        );
+        setTodos(getDragAndDropId(todos, currentTodo.id, card.id));
     };
 
-    const checkIfDataInRange = (payloadDate, payloadTitle) => {
-        const prevData = dateValue[0];
-        const nextData = dateValue[1];
-
-        return (
-            new Date(payloadDate) >= prevData &&
-            new Date(payloadDate) <= nextData &&
-            payloadTitle.toLowerCase().includes(searchInputValues.toLowerCase())
-        );
-    };
-
-    const checkIdDateNotInRange = (payloadDate, payloadTitle) => {
-        const prevDate = payloadDate[0];
-
-        return (
-            new Date(payloadDate) >= prevDate &&
-            payloadTitle.toLowerCase().includes(searchInputValues.toLowerCase())
-        );
-    };
     const getSortList = (list) => {
         const targetDate = dateValue[1];
         return list.filter((todo) =>
             targetDate
-                ? checkIfDataInRange(todo.date, todo.title)
-                : checkIdDateNotInRange(todo.date, todo.title)
+                ? checkIfDataInRange(
+                      todo.date,
+                      todo.title,
+                      dateValue[0],
+                      dateValue[1],
+                      searchInputValues
+                  )
+                : checkIdDateNotInRange(todo.date, todo.title, dateValue[0], searchInputValues)
         );
     };
 
@@ -166,10 +148,7 @@ const Notes = ({ condition }) => {
         setChangeDescriptionInputValue(getCurrentItem.description);
     };
     const sortTodos = (prevTodo, nextTodo) => {
-        if (prevTodo.id > nextTodo.id) {
-            return 1;
-        }
-        return -1;
+        return prevTodo.id > nextTodo.id ? 1 : -1;
     };
 
     return (
