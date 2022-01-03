@@ -129,6 +129,7 @@ const Notes = ({ condition }) => {
 
     const changePickedItem = (element) => {
         getItemInfo(element);
+        console.log('a');
         openModal();
     };
 
