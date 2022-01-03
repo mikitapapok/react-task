@@ -37,3 +37,8 @@ export const sortValidation = (payload) => {
         search: payload,
     };
 };
+
+export const newTodoFormInit = {
+    title: '',
+    description: '',
+};

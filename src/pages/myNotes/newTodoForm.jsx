@@ -8,16 +8,13 @@ import {
     StyledCreateForm,
     StyledFormField,
 } from './styled';
-import { ValidationSchemeForCreate } from '../../constants/validation';
+import { newTodoFormInit, ValidationSchemeForCreate } from '../../constants/validation';
 import PropTypes from 'prop-types';
 
 const NewTodoForm = ({ createTodo }) => {
     return (
         <Formik
-            initialValues={{
-                title: '',
-                description: '',
-            }}
+            initialValues={newTodoFormInit}
             validationSchema={ValidationSchemeForCreate}
             onSubmit={(values, actions) => {
                 createTodo(values);
