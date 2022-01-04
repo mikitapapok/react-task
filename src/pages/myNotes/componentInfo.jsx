@@ -17,6 +17,7 @@ const ComponentInfo = ({ componentInfo, openModal }) => {
                     date={date}
                     showId={true}
                     openModal={openModal}
+                    data-test-id="note-list-component"
                 />
             ) : (
                 <h1>Select note to display</h1>

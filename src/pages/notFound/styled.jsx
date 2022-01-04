@@ -11,7 +11,7 @@ export const ErrorBox = styled('div')({
     marginTop: '50px',
 });
 
-export const Tittle = styled('h2')({
+export const Title = styled('h2')({
     fontSize: '72px',
     color: 'darkgrey',
 });
@@ -25,12 +25,13 @@ export const ErrorBack = styled(StyledLink)({
     color: 'cornflowerblue',
     borderRadius: '100%',
     flexShrink: '0',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: '10px 20px',
     background: '#F8F8FF',
+    padding: '5px 10px',
     fontSize: '100px',
     border: '1px solid cornflowerblue',
     marginTop: '40px',
+    "&:hover":{
+        background: 'grey',
+        color: 'white'
+    }
 });

@@ -1,12 +1,12 @@
 import React from 'react';
 
-import { ErrorBack, ErrorBox, ErrorText, Tittle } from './styled';
+import { ErrorBack, ErrorBox, ErrorText, Title } from './styled';
 import notFound from '../../images/not-found.jpg';
 
 const NotFound = () => {
     return (
         <ErrorBox>
-            <Tittle>404</Tittle>
+            <Title data-test-id="error-title">404</Title>
             <ErrorText>Page not found. Please enter correct Url</ErrorText>
             <img src={notFound} alt="not-found" />
             <ErrorBack to="/">←</ErrorBack>

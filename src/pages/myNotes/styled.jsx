@@ -3,7 +3,8 @@ import Box from '@mui/material/Box';
 import { Button, ListItem } from '@mui/material';
 import List from '@mui/material/List';
 import { TextField } from '@mui/material';
-
+import search from '../../images/search.svg';
+import { Field, Form } from 'formik';
 export const Container = styled(Box)({
     width: '100%',
     maxWidth: '500px',
@@ -32,8 +33,10 @@ export const StyledListComponent = styled(ListItem)((props) => ({
     cursor: 'pointer',
     background: `${props.isActive ? 'slategrey' : 'white'}`,
     color: `${props.isActive ? 'white' : 'black'}`,
+
     '&:hover': {
-        background: 'darkgrey ',
+        background: 'antiquewhite',
+        border: 'none',
     },
     '&:active': {
         background: 'slategrey ',
@@ -94,17 +97,103 @@ export const ChangeDescription = styled('div')({
     marginTop: '20px',
 });
 
-export const StyledInput = styled('input')({
-    width: '300px',
-    padding: '5px',
-    borderRadius: '5px',
-    border: '2px solid grey',
-});
-
 export const StyledField = styled(TextField)({
     padding: '5px',
     width: '100%',
     borderRadius: '5px',
     border: '1px solid grey',
     marginTop: '5px',
+});
+export const ShareButton = styled(Button)({
+    '&.MuiButton-root': {
+        backgroundColor: 'none',
+        width: '20px',
+        marginLeft: 'auto',
+    },
+});
+export const NoteListContainer = styled('div')({
+    display: 'flex',
+    flexDirection: 'column',
+});
+
+export const SortFormContainer = styled('div')({
+    background: 'white',
+    padding: '20px',
+    marginTop: '10px',
+    borderRadius: '5px',
+});
+
+export const NotesContainer = styled('div')({
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+});
+
+export const StyledDatePicker = styled('div')({
+    marginTop: ' 40px',
+    display: 'flex',
+    alignItems: 'center',
+});
+
+export const SearchField = styled('div')({
+    display: 'flex',
+    alignItems: 'center',
+});
+
+export const SearchButton = styled(Button)({
+    '&.MuiButton-root': {
+        backgroundColor: 'cornflowerblue',
+        color: 'white',
+        marginTop: '20px',
+    },
+});
+export const StyledTextField = styled('input')({
+    width: '400px',
+    '&&': {
+        padding: '10px 10px 10px 30px',
+        border: 'none',
+        backgroundImage: `url(${search})`,
+        backgroundPosition: 'start',
+        backgroundPositionY: 'center',
+        backgroundRepeat: 'no-repeat',
+        borderBottom: '1px solid grey',
+        outline: '0',
+    },
+});
+export const NotFoundText = styled('h3')({
+    fontSize: '60px',
+    textAlign: 'center',
+    textTransform: 'uppercase',
+});
+export const StyledCreateField = styled(TextField)({
+    width: '300px',
+    borderRadius: '5px',
+    border: '1px solid grey',
+    marginTop: '15px',
+});
+export const StyledFormField = styled(Field)({
+    '&&': { marginTop: '20px' },
+});
+export const StyledCreateForm = styled(Form)({
+    background: 'white',
+    marginRight: '20px',
+    padding: '20px',
+    borderRadius: '5px',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'start',
+});
+
+export const CreateTodoText = styled('h3')({
+    fontSize: '30px',
+    textTransform: 'uppercase',
+});
+
+export const LoadingButton = styled(SearchButton)({
+    width: '100%',
+    height: '100%',
+    '&.MuiButton-root': {
+        marginTop: '0',
+        borderRadius: '0 0 5px 5px',
+    },
 });

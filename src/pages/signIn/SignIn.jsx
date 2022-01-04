@@ -6,7 +6,7 @@ import { Formik } from 'formik';
 import { RegularText, SignForm, SignInButton, StyledLink, StyledTitle, SignInForm } from './styled';
 
 import { getUserInfo } from '../../redux/actions/actionCreators';
-import { initValuesForLogIn, ValidSchemeForLogIn } from './validation';
+import { initValuesForLogIn, ValidSchemeForLogIn } from '../../constants/validation';
 import { useUsers } from '../../hooks/query/loginQuery';
 import ValidInput from './validInput';
 
