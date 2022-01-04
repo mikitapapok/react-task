@@ -23,19 +23,19 @@ import {
 } from './styled';
 
 import { addTodo, changeTodo, setNewTodos } from '../../redux/actions/actionCreators';
-import { getSharedTodos, getTodoList, getTodos } from '../../selectors/selectors';
+import { selectSharedTodos, selectTodoList, getTodos } from '../../selectors/selectors';
 import SortForm from './sortForm';
 import NewTodoForm from './newTodoForm';
 import {
     checkIdDateNotInRange,
     checkIfDataInRange,
     getDragAndDropId,
-} from '../../constants/constants';
+} from '../../constants/helpers';
 
 const Notes = ({ condition }) => {
     const storeState = getTodos();
-    const todoList = useSelector(getTodoList);
-    const sharedTodos = useSelector(getSharedTodos);
+    const todoList = useSelector(selectTodoList);
+    const sharedTodos = useSelector(selectSharedTodos);
     const dispatch = useDispatch();
 
     const [todos, setTodos] = useState([]);

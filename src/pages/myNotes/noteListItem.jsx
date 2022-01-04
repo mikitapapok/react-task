@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { StyledSpan, EditButton, ShareButton, NoteListContainer } from './styled';
 import shareIcon from '../../images/iconmonstr-share-9.svg';
 import { useDispatch, useSelector } from 'react-redux';
-import { getTodoList } from '../../selectors/selectors';
+import { selectTodoList } from '../../selectors/selectors';
 import { shareTodo } from '../../redux/actions/actionCreators';
 const NoteListItem = ({
     getItemInfo,
@@ -18,7 +18,7 @@ const NoteListItem = ({
     changePickedItem,
     condition,
 }) => {
-    const todoList = useSelector(getTodoList);
+    const todoList = useSelector(selectTodoList);
     const dispatch = useDispatch();
     const submitTodo = () => {
         const currentTodo = todoList.find((todo) => todo.id === id);
